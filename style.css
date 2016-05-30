@@ -1,0 +1,28 @@
+
+
+body{
+	font-family: ;
+}
+
+h1 {
+	font-size: 64 px;
+}
+
+p {
+	font-size: 24 px;
+}
+
+.pic {
+	margin: auto;
+	height: 100%;
+	width: 50%;
+	background-image: "";
+}
+
+
+.content {
+	height: 100%;
+	width: 50%;
+	overflow: scroll;
+}
+
