@@ -15,14 +15,14 @@ p {
 .pic {
 	margin: auto;
 	height: 100%;
-	width: 50%;
+	max-width: 50%;
 	background-image: "";
 }
 
 
 .content {
 	height: 100%;
-	width: 50%;
+	min-width: 50%;
 	overflow: scroll;
 }
 
