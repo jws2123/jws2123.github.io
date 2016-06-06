@@ -21,6 +21,11 @@ div {
 	width: 100%;
 }
 
+.container {
+	display: flex;
+}
+
+
 .pic {
 	margin: auto;
 	height: 100%;
