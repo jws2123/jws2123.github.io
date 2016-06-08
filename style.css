@@ -27,10 +27,12 @@ div {
 
 
 .pic {
-	margin: auto;
-	text-align: center;
+	display: flex;
+	align-items: center;
 	height: 100%;
 	width: 50%;
+	margin: auto;
+	text-align: center;
 }
 
 
