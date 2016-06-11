@@ -28,7 +28,6 @@ div {
 
 .pic {
 	display: flex;
-	align-items: center;
 	height: 100%;
 	width: 50%;
 	margin: auto;
@@ -39,6 +38,6 @@ div {
 .content {
 	height: 100%;
 	width: 50%;
-	overflow: scroll;
+	overflow: auto;
 }
 
