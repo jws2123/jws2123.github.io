@@ -29,6 +29,7 @@ div {
 .pic {
 	display: flex;
 	background-image: url("shannon2.jpg");
+	background-size: cover;
 	align-items: center;
 	height: 100%;
 	width: 50%;
