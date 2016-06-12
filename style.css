@@ -41,6 +41,12 @@ a:hover {
 	text-decoration: none;
 }
 
+a:visited {
+	background-color: black;
+	color: whitesmoke;
+	text-decoration: none;
+}
+
 .container {
 	display: flex;
 }
@@ -60,7 +66,7 @@ a:hover {
 .content {
 	height: 100%;
 	width: 50%;
-	overflow: auto;
+	overflow: scroll;
 	padding: 3%;
 	background-color: whitesmoke;
 }
