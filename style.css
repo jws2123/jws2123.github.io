@@ -73,6 +73,10 @@ a:hover {
 	background-color: whitesmoke;
 }
 
+.content::-webkit-scrollbar {
+	display: none;
+}
+
 /*.outer {
 	display:  table;
 	position: absolute;
