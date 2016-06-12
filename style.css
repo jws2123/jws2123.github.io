@@ -1,7 +1,7 @@
 
 
 html, body{
-	font-family: sans-serif;
+	font-family: "Lucida Console", Monaco, monospace;
 	margin: 0;
 	width: 100%;
 	height: 100%;
@@ -9,6 +9,10 @@ html, body{
 
 h1 {
 	font-size: 32px;
+}
+
+h2 {
+	font-size: 24px;
 }
 
 p {
@@ -62,13 +66,17 @@ div {
 	width: 100%;
 }
 
+ul.circle{
+	list-style-type: circle;
+}
+
 #pad {
 	padding: 5%;
 }
 
 
 #pad-top {
-	padding-top: 30%;
+	padding-top: 60%;
 	padding-right: 5%;
 	padding-left: 5%
 }
