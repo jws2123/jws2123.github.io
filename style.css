@@ -15,6 +15,10 @@ h2 {
 	font-size: 24px;
 }
 
+h4 {
+	font-size: 18px;
+}
+
 p {
 	font-size: 12px;
 }
@@ -23,6 +27,16 @@ div {
 	padding-right: 3%;
 	height: 100%;
 	width: 100%;
+}
+
+a:link {
+	background-color: black;
+	color: whitesmoke;
+}
+
+a:hover {
+	background-color: whitesmoke;
+	color: black;
 }
 
 .container {
@@ -46,6 +60,7 @@ div {
 	width: 50%;
 	overflow: auto;
 	padding: 3%;
+	background-color: whitesmoke;
 }
 
 .outer {
@@ -66,12 +81,17 @@ div {
 	width: 100%;
 }
 
-ul.circle{
+ul {
+	font-size: 12px;
+}
+
+.circle{
 	list-style-type: circle;
 }
 
 #pad {
 	padding: 5%;
+	color: whitesmoke;
 }
 
 
@@ -79,6 +99,7 @@ ul.circle{
 	padding-top: 60%;
 	padding-right: 5%;
 	padding-left: 5%
+	color: whitesmoke;
 }
 
 
