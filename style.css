@@ -78,7 +78,8 @@ a:hover {
 }
 
 .license {
-	padding: 10px;
+	padding: 100px;
+	height: auto;
 }
 
 .content::-webkit-scrollbar {
