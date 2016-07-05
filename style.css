@@ -1,19 +1,19 @@
 
 
 html, body{
-	font-family: "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+	font-family: Montserrat, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
 	margin: 0;
 	width: 100%;
 	height: 100%;
 }
 
 h1 {
-	font-family: "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+	font-family: Montserrat, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
 	font-size: 32px;
 }
 
 h2 {
-	font-family: "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+	font-family: Montserrat, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
 	font-size: 24px;
 }
 
@@ -60,7 +60,7 @@ a:hover {
 
 .pic {
 	display: flex;
-	background-image: url("chalkboard1.JPG");
+	background-image: url("chalkboard2.JPG");
 	background-size: cover;
 	height: 100%;
 	width: 50%;
