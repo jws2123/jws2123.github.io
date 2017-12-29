@@ -17,25 +17,25 @@ h2 {
 	font-size: 24px;
 }
 
-h4 {
-	font-family: 'Abel', sans-serif;
-	font-size: 18px;
-}
-
-p {
-	font-family: 'Abel', sans-serif;
-	font-size: 12px;
-}
-
 /*h4 {
-	font-family: 'Titillium Web', sans-serif;
+	font-family: 'Abel', sans-serif;
 	font-size: 18px;
 }
 
 p {
-	font-family: 'Titillium Web', sans-serif;
+	font-family: 'Abel', sans-serif;
 	font-size: 12px;
 }*/
+
+h4 {
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 18px;
+}
+
+p {
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 12px;
+}
 
 /*h4 {
 	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
@@ -130,14 +130,24 @@ ul {
 	font-size: 12px;
 }
 
+/*li {
+	font-family: 'Abel', sans-serif;
+	margin: 4px;
+}*/
+
 li {
+	font-family: 'Titillium Web', sans-serif;
+	margin: 4px;
+}
+
+/*li {
 	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 	margin: 4px;
 }
 
 .circle{
 	list-style-type: circle;
-}
+}*/
 
 #pad {
 	padding: 5%;
