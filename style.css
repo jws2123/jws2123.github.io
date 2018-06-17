@@ -89,6 +89,16 @@ a:hover {
 }
 
 
+.pic324 {
+	display: flex;
+	background-image: url("vector.JPG");
+	background-size: cover;
+	height: 100%;
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+
 .content {
 	height: 100%;
 	width: 50%;
