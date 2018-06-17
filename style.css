@@ -53,6 +53,20 @@ div {
 	width: 100%;
 }
 
+table {
+	font-family: 'Titillium Web', sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+
+} 
+
+td, th {
+	border: 1px solid black; 
+	text-align: left;
+	padding: 8px;
+
+}
+
 a:link {
 	background-color: black;
 	color: whitesmoke;
