@@ -118,7 +118,7 @@ a:hover {
 	width: 20%;
 	overflow: scroll;
 	padding: 3%;
-	background-color: black;
+	background-color: #505050;
 }
 
 .content {
@@ -136,6 +136,10 @@ a:hover {
 }
 
 .content::-webkit-scrollbar {
+	display: none;
+}
+
+.links::-webkit-scrollbar {
 	display: none;
 }
 
