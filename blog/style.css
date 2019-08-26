@@ -1,0 +1,189 @@
+
+
+html, body{
+	font-family: Montserrat, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+h1 {
+	font-family: Montserrat, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+	font-size: 32px;
+}
+
+h2 {
+	font-family: Montserrat, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+	font-size: 24px;
+}
+
+/*h4 {
+	font-family: 'Abel', sans-serif;
+	font-size: 18px;
+}
+
+p {
+	font-family: 'Abel', sans-serif;
+	font-size: 12px;
+}*/
+
+h4 {
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 18px;
+}
+
+p {
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 12px;
+}
+
+/*h4 {
+	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+	font-size: 18px;
+}
+
+p {
+	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+	font-size: 12px;
+}*/
+
+div {
+	/*padding-right: 3%;*/
+	height: 100%;
+	width: 100%;
+}
+
+table {
+	font-family: 'Titillium Web', sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+
+} 
+
+td, th {
+	border: 1px solid black; 
+	text-align: left;
+	padding: 8px;
+
+}
+
+a:link {
+	background-color: black;
+	color: whitesmoke;
+	text-decoration: none;
+}
+
+a:visited {
+	background-color: black;
+	color: whitesmoke;
+	text-decoration: none;
+}
+
+a:hover {
+	background-color: whitesmoke;
+	color: black;
+	text-decoration: none;
+}
+
+
+.container {
+	display: flex;
+	overflow: hidden;
+}
+
+
+.pic {
+	display: flex;
+	background-image: url("chalkboard1.JPG");
+	background-size: cover;
+	height: 100%;
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+
+
+.pic324 {
+	display: flex;
+	background-image: url("m324/vector.jpg");
+	background-size: cover;
+	height: 100%;
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+
+.content {
+	height: 100%;
+	width: 50%;
+	overflow: scroll;
+	padding: 3%;
+	background-color: whitesmoke;
+}
+
+.license {
+	padding-bottom: 100px;
+	height: auto;
+	line-height: 120%;
+}
+
+.content::-webkit-scrollbar {
+	display: none;
+}
+
+/*.outer {
+	display:  table;
+	position: absolute;
+	height: 100%;
+	width: 50%;
+}
+
+.middle {
+	display: flex;
+	vertical-align: middle;
+	height;
+}
+
+.inner {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}*/
+
+ul {
+	font-size: 12px;
+}
+
+/*li {
+	font-family: 'Abel', sans-serif;
+	margin: 4px;
+}*/
+
+li {
+	font-family: 'Titillium Web', sans-serif;
+	margin: 4px;
+}
+
+/*li {
+	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+	margin: 4px;
+}
+
+.circle{
+	list-style-type: circle;
+}*/
+
+#pad {
+	padding: 5%;
+	color: whitesmoke;
+}
+
+
+#pad-top {
+	color: whitesmoke;
+	padding-top: 50%;
+	padding-right: 5%;
+	padding-left: 5%;
+}
+
+
