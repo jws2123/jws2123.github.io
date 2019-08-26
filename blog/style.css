@@ -115,10 +115,18 @@ a:hover {
 
 .content {
 	height: 100%;
-	width: 50%;
+	width: 80%;
 	overflow: scroll;
 	padding: 3%;
 	background-color: whitesmoke;
+}
+
+.links {
+	height: 100%;
+	width: 20%;
+	overflow: scroll;
+	padding: 3%;
+	background-color: black;
 }
 
 .license {
