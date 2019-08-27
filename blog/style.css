@@ -85,6 +85,23 @@ a:hover {
 	text-decoration: none;
 }
 
+a.nav:link {
+	background-color: whitesmoke;
+	color: #505050;
+	text-decoration: none;
+}
+
+a.nav:visited {
+	background-color: whitesmoke;
+	color: #505050;
+	text-decoration: none;
+}
+
+a.nav:hover {
+	background-color: #505050;
+	color: whitesmoke;
+	text-decoration: none;
+}
 
 .container {
 	display: flex;
