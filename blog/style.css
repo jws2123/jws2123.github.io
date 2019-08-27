@@ -164,6 +164,7 @@ a:hover {
 
 ul {
 	font-size: 12px;
+	font-color: whitesmoke;
 }
 
 /*li {
@@ -174,16 +175,18 @@ ul {
 li {
 	font-family: 'Titillium Web', sans-serif;
 	margin: 4px;
+	font-color: whitesmoke;
 }
 
 /*li {
 	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 	margin: 4px;
-}
-
-.circle{
-	list-style-type: circle;
 }*/
+
+.l{
+	list-style-type: circle;
+	color: whitesmoke;
+}
 
 #pad {
 	padding: 5%;
