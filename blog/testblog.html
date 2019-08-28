@@ -56,22 +56,212 @@
 		Test Blog
 		</h2>
 		<p>
-		When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
-$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
-$$ \begin{array}{rcll}
-y & = & x^{2}+bx+c\\
-  & = & x^{2}+2\times\dfrac{b}{2}x+c\\
-  & = & \underbrace{x^{2}+2\times\dfrac{b}{2}x+\left(\frac{b}{2}\right)^{2}}-
-      {\left(\dfrac{b}{2}\right)^{2}+c}\\
-  &  & \qquad\left(x+{\dfrac{b}{2}}\right)^{2}\\
-  & = & \left(x+\dfrac{b}{2}\right)^{2}-\left(\dfrac{b}{2}\right)^{2}+c 
-  & \left|+\left({\dfrac{b}{2}}\right)^{2}-c\right.\\
-    y+\left(\dfrac{b}{2}\right)^{2}-c & = & \left(x+
-    \dfrac{b}{2}\right)^{2} & \left|\strut(\textrm{vertex form})\right.\\
-y-y_{S} & = & (x-x_{S})^{2}\\
-S(x_{S};y_{S}) & \,\textrm{or}\, 
-    & S\left(-\dfrac{b}{2};\,\left(\dfrac{b}{2}\right)^{2}-c\right)
-\end{array} $$ 
+		In this section, we will draw an important connection between Laplacian and the Fourier Transform.  We will see that the Fourier Transform provides us with a type of spectral theorem for the Laplacian.  The bulk of this section follows the presentation in Terras' text ~\cite{Ter13}.
+ 
+ \begin{definition}[Schwartz Space]
+ The \emph{Schwartz space}, $\mathcal{S}$ is the space of all infinitely differentiable functions $f: \R^n \rightarrow \C$ such that $\lvert x^a D^b f \rvert$ is bounded for all $a,b \in \Z^n$, with $a_j \geq 0$ and $b_j \geq 0$.  Functions in the Schwartz space are called \emph{Schwartz functions}.  Here we use standard multi-index notation:
+ 
+ \begin{align*}
+ a &:= (a_1, a_2, \cdots, a_n)  \\
+ x^a &:= x_1^{a_1} x_2^{a_2} \cdots x_n^{a_n} \\
+ D^b &:= \frac{\partial ^{\lvert b \rvert}}{\partial x_1^{b_1} \partial x_2^{b_2} \cdots \partial x_n^{b_n} } \text{ where } \lvert b \rvert = b_1 + b_2 + \cdots + b_n \\
+ \end{align*}
+ \end{definition}
+ 
+ This definition may seem unwieldy at first glance, but it's main purpose is to capture a set of smooth functions that decay sufficiently fast (i.e. are $L^2(\R^n)$ integrable), and are dense in the set of all $L^2(R^n)$ integrable functions ~\cite{Fol99}.  There is another equivalent definition of the Schwartz space $\mathcal{S}$ which does a better job providing this intuition ~\cite{Fol99} (although for the proofs that follow, the definition above turns out to be the most useful).
+ 
+ Next, we will define a multiplication operation on functions (convolution).  It turns out that convolution is the multiplication operation that plays nicely with the Fourier Transform. show that if we "multiply" two Schwarz functions in this way, we will get a Schwarz function.
+ 
+ \begin{definition}[Convolution]
+ We define the convolution operation $*$ on two functions $f,g \in L^1_{loc}(R^m)$ where we assume one of the functions has bounded support
+ 
+ \begin{equation*}
+ f * g (x) = \int_{\R^n} f(x-y)g(y)dy = \int_{\R^n} f(y)g(x-y)dy
+ \end{equation*}
+
+ \end{definition}
+ 
+ \noindent Convolution is well-defined since the last two expressions are equivalent under a change of variables.  
+
+ Next, we will define the Fourier Transform on Schwartz functions and follow this by a workhorse Theorem, which effectively gives us all of the properties necessary to prove the inversion formula.
+ 
+ \begin{definition}[Fourier Transform of Schwartz functions]
+ Let $f \in \mathcal{S}$.  Then the Fourier Transform of $f$ is 
+ 
+ \begin{equation}
+ \hat{f}(y) = \int_{\R^n} f(x) e^{-2 \pi i ^txy} dx
+ \end{equation}
+ 
+ \noindent where $x \in \R^n$ is a column vector, and $^tx$ is the transpose.  In other words, $^txy$ is the dot product between $x$ and $y$.  This definition is well-defined since the integral above converges for functions in $\mathcal{S}$.
+
+ \end{definition}
+
+ 
+ \begin{theorem}
+ The Fourier Transform of Schwartz Functions has the following properties.
+ 
+ \begin{enumerate}
+ \item If $f \in \mathcal{S}$, then $\hat{f} \in \mathcal{S}$.
+ \item $D^a(\hat{f}) = ((-2\pi i x)^a f)\widehat{}$.
+ \item $(D^a f)\widehat{} = (2\pi i x)^a \hat{f}$.
+ \item Convolution Theorem:  $\widehat{(f*g)} = \hat{f} \cdot \hat{g}$.
+ \item Translation: Set $f_a(x) = f(x+a)$ for $a,x$ in $\R^m$. Then
+      \begin{equation*}
+      \hat{f_a}(x) = e^{2\pi i^t ax}\hat{f}(x)\text{.}
+      \end{equation*}
+  \item Dilation: Let $u$ be a positive real number and set $^uf(x) = f(ux)$ for $x$ in $\R^m$.  Then
+      \begin{equation*}
+      \widehat{^uf}(x) = u^{-m}\hat{f}(u^{-1}x) \text{.}
+      \end{equation*}
+  \item Let $f(x) = e^{-\pi ||x||^2}$ for $x \in \R^n$. Then, $f = \hat{f}$.
+  \item $G_t = G_t^- = \hat{\hat{G}}_t$, where we say $f^-(x) := f(-x)$.
+  \item $\int_{\R^m} \hat{f}g dx = \int_{\R^m} f\hat{g} dx$.
+ \end{enumerate}
+
+ \end{theorem}
+ 
+ Before proving property four, we will require the following lemma showing that $\widehat{(f*g)}$ is a well-defined Fourier Transform.  The reader is encouraged to consult Folland's text ~\cite{Fol99} for a proof.
+  
+  \begin{lemma}
+  If $f$ and $g$ are in $\mathcal{S}$, then $f*g$ is in $\mathcal{S}$
+  \end{lemma}
+  
+  With the lemma under our belt, we can begin a proof of our main theorem.
+
+  \begin{proof}
+  We begin by proving the second property.  Note that we may pass the derivative since the function is integrable, as is its derivative.  Additionally, note that here $D^a$ is a differential operator with respect to $y$.
+  
+  \begin{align*}
+  D^a(\hat{f})(y) &= D^a \bigg{(} \int_{\R^m} f(x)e^{-2 \pi i ^tx y} dx \bigg{)} \\
+  &= \int_{\R^m}  D^a (f(x)e^{-2 \pi i ^tx y}) dx \\
+  &= \int_{\R^m} f(x) D^a(e^{-2 \pi i ^tx y}) dx \\
+  &= \int_{\R^m} f(x) \frac{\partial ^{|a|}}{\partial^{a_1} y_1 \cdots \partial^{a_m} y_m} (\prod_{j=1}^m e^{-2 \pi i x_j y_j}) dx \\
+  &= \int_{\R^m} f(x) (\prod_{j=1}^m -2 \pi x_i)(\prod_{j=1}^m e^{-2 \pi i x_j y_j})dx \\
+  &= \int_{\R^m} f(x) (-2 \pi i x)^a e^{-2 \pi i t^xy}dx \\
+  &= ( (-2 \pi i x)^a f(x) )\widehat{}
+  \end{align*}
+  
+  \noindent Next, we show the third property.  We first show this for $|a| = 1$, then show that the general case follows by induction.  Note that here, $D^a$ is a differential operator with respect to $x$.
+  
+  \noindent Let $|a| = 1$:  
+  \begin{align*}
+  (D^a f)\widehat{} &= \int_{\R^m} (D^a f(x)) e^{-2 \pi i ^txy}dx \\
+  &= \int_{\R^m} \frac{\partial f}{\partial x_i} e^{-2 \pi i ^txy}dx \text{, for some i} \\
+  &= \int_{\R^m} (2 \pi i y_i) f(x) e^{-2 \pi ^txy}dx \text{, by integration by parts} \\
+  &= \int_{\R^m} (2 \pi i y)^a f(x) e^{-2 \pi ^txy}dx \\
+  &= (2 \pi i y)^a \hat{f}(y)
+  \end{align*}
+  
+  \noindent Now, let $D^a$ be any differential operator with $|a| > 1$, and define $D^b$ such that $D^b \frac{\partial}{\partial x_i} = D^a$, for some $i$.  Notice $|b| = |a| - 1$.  Then, by induction, we can show the result follows.
+  
+  \begin{align*}
+  (D^a f)\widehat{} &= \int_{\R^m} (D^a f(x)) e^{-2 \pi i ^txy}dx \\
+  &= \int_{\R^m} (D^b \frac{\partial f}{\partial x_i}(x)) e^{-2 \pi i ^txy}dx \\
+  &= (2\pi i y)^b \int_{\R^m} \frac{\partial f}{\partial x_i}(x) e^{-2 \pi i ^txy}dx \text{, by the inductive hypothesis} \\
+  &= (2\pi i y)^b (2 \pi i y_i) \hat{f}(y) \text{, by replicating the base case for induction} \\
+  &= (2\pi i y)^a \hat{f}(y) \text{,}
+  \end{align*}
+  
+  \noindent which completes the proof of the third property.  To see the first property, we need only use these two properties.  If $f \in \mathcal{S}$, then $(D^a f)$ is bounded for any $a$ so we can conclude by the third property that $(2\pi i y)^a \hat{f}(y)$ is bounded for any $a$.  Similarly, since $f \in \mathcal{S}$, we can conclude $(-2 \pi i x)^a f(x)$ is bounded for any $a$.  By property two, we can conclude $D^a(\hat{f})(y)$ is bounded for any $a$.  Hence, we can conclude $\hat{f} \in \mathcal{S}$.
+  
+  Now we prove property four.  
+  
+  \begin{align*}
+  \widehat{(f*g)} &= \bigg{(} \int_{\R^m} f(x-z)g(z)dz \bigg{)}\widehat{} \\
+  &= \int_{\R^m} \bigg{(} \int_{\R^m} f(x-z)g(z)dz \bigg{)} e^{-2 \pi i ^txy} dy\\
+  &= \int_{\R^m} \bigg{(} \int_{\R^m} f(x-z)g(z)e^{-2 \pi i ^txy}dy \bigg{)}  dz \text{, by Fubini, which we can apply because of the lemma.} \\
+  &= \int_{\R^m} g(z) \bigg{(} \int_{\R^m} f(x-z) e^{-2 \pi i ^txy} dy\bigg{)}dz \\
+  &= \int_{\R^m} g(z) \bigg{(} \int_{\R^m} f(w) e^{-2 \pi i ^twy} e^{2 \pi i ^tzy} dw\bigg{)}dz \text{, letting } w=x-z \\
+  &= \bigg{(} \int_{\R^m} g(z)e^{2 \pi i ^tzy}dz\bigg{)} \bigg{(} \int_{\R^m} f(w) e^{-2 \pi i ^twy}dw\bigg{)} \\
+  &= \hat{f}\cdot\hat{g}
+  \end{align*}
+
+  We move on to property (5).  
+  
+  \begin{align*}
+  \hat{f_a}(y) &= \int_{\R^m} f(x+a) e^{-2 \pi i ^txy}dx \\
+  &= \int_{\R^m} f(w) e^{-2 \pi i ^t(w-a)y}dx \text{, letting w = x + a} \\
+  &= \int_{\R^m} f(w) e^{-2 \pi i ^twy}e^{2 \pi i ^tay}dx \\
+  &= e^{2 \pi i ^tay} \int_{\R^m} f(w) e^{-2 \pi i ^twy}dx \\
+  &= e^{2 \pi i ^tay} \hat{f}(y)
+  \end{align*}
+  
+  Next, we show property (6).
+  
+  \begin{align*}
+  \widehat{^uf}(y) & = \int_{\R^m} f(ux)e^{-2 \pi i ^txy} dx\\
+  &= \int_{\R^m} f(w)e^{-2 \pi i ^t(u^{-1}w)y}u^{-m} dx \text{, where } u^{-m} \text{ is the Jacobian of } x = u^{-1}w \\ 
+  &= u^{-m} \int_{\R^m} f(w)e^{-2 \pi i ^tw(u^{-1}y)}dx \\
+  &= u^{-m} \hat{f}(u^{-1}y) \text{.}
+  \end{align*}
+
+  To prove property (7), compute $\widehat{\frac{df}{dx}}(x)$ using integration by parts and then solve the resulting differential equation.  For property (8), let $G_t$ be the Gauss kernel, and compute directly using property (6) and property (7).  Property (9) is an application of Fubini with an appropriate change of variables.
+  \end{proof}
+  
+  We will now use our workhorse theorem to prove the Fourier Inversion formula for Schwartz functions.  
+  
+  \begin{theorem}[Fourier Inversion Formula]
+  For $f \in \mathcal{S}$, $\hat{\hat{f}} = f^-(x)$, which we can write as:
+  
+  \begin{equation}
+  f(x) = \int_{\R^n} \hat{f}(y) e^{2 \pi i ^tyx} dx \text{.}
+  \end{equation}
+
+  \end{theorem}
+  
+  \begin{proof}
+  Use properties 8 and 9 from Theorem 9.1 with the fact that $G_t$ is a positive Dirac sequence to conclude the inversion formula.  
+  \end{proof}
+  
+  Now, we can compare the Fourier Transform to the Inverse Transform, and unpack the meaning of the statement at the beginning of this section:  "The Fourier Transform gives us a 'spectral theorem' about the Laplacian".  We will do this for $\R$ first:
+  
+  \begin{align*}
+  \hat{f}(y) &= \int_{\R^n} f(x) e^{-2 \pi i xy} dx \\
+  f(x) &= \int_{\R^n} \hat{f}(y) e^{2 \pi i yx} dx 
+  \end{align*}
+  
+  From Section 2 above, we computed the eigenfunctions of the Laplacian on $\R$.  It turns out that the same statement holds in higher dimensions, where eigenfunctions are given by products of exponentials.  Now, notice that the Fourier transform is integration against eigenfunctions of the Laplacian.  The same holds for the inverse transform, but in addition, it also gives us a characterization of the function in terms of eigenfunctions of the Laplacian.  
+  
+  This suggests that one way to understand the Laplacian is to understand Fourier Integrals, and in particular, the algebraic structure of the set of functions on our space.  However, the reader should keep in mind, all of the statements above apply to Schwartz functions, which may seem a bit restrictive.  We will show how to extend these statement from the class of Schwartz functions to all of $L^2(\R^n)$.  First, however, we will give a few consequences of the machinery we have built.  The reader is encouraged to consult Folland's text for proofs ~\cite{Fol99}.
+
+  \begin{theorem}
+  $f \mapsto \hat{f}$ is one-to-one, linear from $\mathcal{S}$ onto $\mathcal{S}$.
+  \end{theorem}
+  
+  In addition to property (4) above (Convolution Theorem), $(f*g)\hat{} = \hat{f} \cdot \hat{g}$, we also have the following.
+  
+  \begin{theorem}
+  Let $f$ and $g$ be Schwartz functions.  $\widehat{(fg)} = \hat{f} * \hat{g}$.
+  \end{theorem}
+  
+  Next, given the inner product for $f$, $g$ in $\mathcal{S}$ by $(f,g) = \int f \overline{g}$ (notice that this the usual $L^2$ norm), we have the following.  
+  
+  \begin{theorem}[Parseval's Identity]
+  Let $f$ and $g$ be Schwartz functions.  $(f,g) = (\hat{f},\hat{g})$.
+  \end{theorem}
+  
+  We also have the following Corollary (let $g=f$ in the above Theorem).
+  
+  \begin{corollary}[Plancharel Identity]
+  For $f \in \mathcal{S}$, $||f||_{L^2} = ||\hat{f}||_{L^2}$
+  \end{corollary}
+ 
+ Now, recall that Schwartz functions are dense in $L^2(R^n)$.  If we can successfully define the Fourier Transforms on $L^2(\R^n)$, then we can extend all of the above machinery to all functions in $L^2(\R^n)$.  First, notice that the Fourier Transform as defined above will not work for arbitrary $L^2(\R^n)$ functions.  However, we can define the transform as follows.
+ 
+ \begin{definition}[Fourier Transform of functions in $L^2(\R^n)$]
+ 
+ \begin{equation}
+ \hat{f}(y) = \lim_{n \rightarrow \infty} \int_{-n}^n f(x)e^{- 2 \pi i ^ty x} dx
+ \end{equation}
+ 
+ \noindent where convergence is in $L^2(\R^n)$.
+ \end{definition}
+ 
+ This definition makes sense; we can apply the Dominated Convergence Theorem to show that this Fourier Transform is well-defined.  With a bit of bootstrapping, the properties above will now follow for the Fourier Integrals on $L^2(\R^n)$.  In particular, we see that the Fourier Transform is an isometric isomorphism of $L^2(\R^n)$.
+ 
+ Thus, we can conclude that the inverse transform also gives us a decomposition of functions in $L^2(\R^n)$ in terms of the eigenfunctions of the Laplacian.  This raises many questions, the most obvious of which is a question of whether the eigenfunctions are a basis for $L^2(\R^n)$.  For $L^2(\R^n)$, this is true, and the argument is not hard (in fact, we have an orthonormal basis).  It requires an application of the Stone-Weierstrauss theorem and a touch of bootstrapping.  Does this hold for any space?  We will give a generalization for Compact Riemann surfaces in Section 8.
+ 
+ Now, we can say that the Fourier transform is a change of basis to new coordinates that are especially suitable for understanding the Laplacian.  We have effectively "diagonalized" the Laplacian.  However, there is one quirky thing happening.  The eigenfunctions of the Laplacian on $\R$ are not actually in $L^2(\R)$.  For this reason, they are referred to as \emph{generalized eigenfunctions} or \emph{almost eigenfunctions}.  When we reduce to the compact case (for example, $[0,1]$), we will see that the eigenfunctions of the Laplacian are in $L^2$, being smooth functions on a compact space. 
 		</p>
 
 		<br>
