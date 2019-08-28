@@ -58,7 +58,6 @@
 		<p>
 		In this section, we will draw an important connection between Laplacian and the Fourier Transform.  We will see that the Fourier Transform provides us with a type of spectral theorem for the Laplacian.  The bulk of this section follows the presentation in Terras' text ~\cite{Ter13}.
  
- \begin{definition}[Schwartz Space]
  The \emph{Schwartz space}, $\mathcal{S}$ is the space of all infinitely differentiable functions $f: \R^n \rightarrow \C$ such that $\lvert x^a D^b f \rvert$ is bounded for all $a,b \in \Z^n$, with $a_j \geq 0$ and $b_j \geq 0$.  Functions in the Schwartz space are called \emph{Schwartz functions}.  Here we use standard multi-index notation:
  
  \begin{align*}
@@ -66,26 +65,21 @@
  x^a &:= x_1^{a_1} x_2^{a_2} \cdots x_n^{a_n} \\
  D^b &:= \frac{\partial ^{\lvert b \rvert}}{\partial x_1^{b_1} \partial x_2^{b_2} \cdots \partial x_n^{b_n} } \text{ where } \lvert b \rvert = b_1 + b_2 + \cdots + b_n \\
  \end{align*}
- \end{definition}
  
  This definition may seem unwieldy at first glance, but it's main purpose is to capture a set of smooth functions that decay sufficiently fast (i.e. are $L^2(\R^n)$ integrable), and are dense in the set of all $L^2(R^n)$ integrable functions ~\cite{Fol99}.  There is another equivalent definition of the Schwartz space $\mathcal{S}$ which does a better job providing this intuition ~\cite{Fol99} (although for the proofs that follow, the definition above turns out to be the most useful).
  
  Next, we will define a multiplication operation on functions (convolution).  It turns out that convolution is the multiplication operation that plays nicely with the Fourier Transform. show that if we "multiply" two Schwarz functions in this way, we will get a Schwarz function.
  
- \begin{definition}[Convolution]
  We define the convolution operation $*$ on two functions $f,g \in L^1_{loc}(R^m)$ where we assume one of the functions has bounded support
  
  \begin{equation*}
  f * g (x) = \int_{\R^n} f(x-y)g(y)dy = \int_{\R^n} f(y)g(x-y)dy
  \end{equation*}
-
- \end{definition}
  
  \noindent Convolution is well-defined since the last two expressions are equivalent under a change of variables.  
 
  Next, we will define the Fourier Transform on Schwartz functions and follow this by a workhorse Theorem, which effectively gives us all of the properties necessary to prove the inversion formula.
  
- \begin{definition}[Fourier Transform of Schwartz functions]
  Let $f \in \mathcal{S}$.  Then the Fourier Transform of $f$ is 
  
  \begin{equation}
@@ -97,7 +91,6 @@
  \end{definition}
 
  
- \begin{theorem}
  The Fourier Transform of Schwartz Functions has the following properties.
  
  \begin{enumerate}
@@ -118,17 +111,12 @@
   \item $\int_{\R^m} \hat{f}g dx = \int_{\R^m} f\hat{g} dx$.
  \end{enumerate}
 
- \end{theorem}
- 
  Before proving property four, we will require the following lemma showing that $\widehat{(f*g)}$ is a well-defined Fourier Transform.  The reader is encouraged to consult Folland's text ~\cite{Fol99} for a proof.
   
-  \begin{lemma}
   If $f$ and $g$ are in $\mathcal{S}$, then $f*g$ is in $\mathcal{S}$
-  \end{lemma}
   
   With the lemma under our belt, we can begin a proof of our main theorem.
 
-  \begin{proof}
   We begin by proving the second property.  Note that we may pass the derivative since the function is integrable, as is its derivative.  Additionally, note that here $D^a$ is a differential operator with respect to $y$.
   
   \begin{align*}
@@ -196,22 +184,16 @@
   \end{align*}
 
   To prove property (7), compute $\widehat{\frac{df}{dx}}(x)$ using integration by parts and then solve the resulting differential equation.  For property (8), let $G_t$ be the Gauss kernel, and compute directly using property (6) and property (7).  Property (9) is an application of Fubini with an appropriate change of variables.
-  \end{proof}
   
   We will now use our workhorse theorem to prove the Fourier Inversion formula for Schwartz functions.  
   
-  \begin{theorem}[Fourier Inversion Formula]
   For $f \in \mathcal{S}$, $\hat{\hat{f}} = f^-(x)$, which we can write as:
   
   \begin{equation}
   f(x) = \int_{\R^n} \hat{f}(y) e^{2 \pi i ^tyx} dx \text{.}
   \end{equation}
 
-  \end{theorem}
-  
-  \begin{proof}
   Use properties 8 and 9 from Theorem 9.1 with the fact that $G_t$ is a positive Dirac sequence to conclude the inversion formula.  
-  \end{proof}
   
   Now, we can compare the Fourier Transform to the Inverse Transform, and unpack the meaning of the statement at the beginning of this section:  "The Fourier Transform gives us a 'spectral theorem' about the Laplacian".  We will do this for $\R$ first:
   
@@ -224,38 +206,28 @@
   
   This suggests that one way to understand the Laplacian is to understand Fourier Integrals, and in particular, the algebraic structure of the set of functions on our space.  However, the reader should keep in mind, all of the statements above apply to Schwartz functions, which may seem a bit restrictive.  We will show how to extend these statement from the class of Schwartz functions to all of $L^2(\R^n)$.  First, however, we will give a few consequences of the machinery we have built.  The reader is encouraged to consult Folland's text for proofs ~\cite{Fol99}.
 
-  \begin{theorem}
   $f \mapsto \hat{f}$ is one-to-one, linear from $\mathcal{S}$ onto $\mathcal{S}$.
-  \end{theorem}
   
   In addition to property (4) above (Convolution Theorem), $(f*g)\hat{} = \hat{f} \cdot \hat{g}$, we also have the following.
   
-  \begin{theorem}
   Let $f$ and $g$ be Schwartz functions.  $\widehat{(fg)} = \hat{f} * \hat{g}$.
-  \end{theorem}
   
   Next, given the inner product for $f$, $g$ in $\mathcal{S}$ by $(f,g) = \int f \overline{g}$ (notice that this the usual $L^2$ norm), we have the following.  
   
-  \begin{theorem}[Parseval's Identity]
   Let $f$ and $g$ be Schwartz functions.  $(f,g) = (\hat{f},\hat{g})$.
-  \end{theorem}
   
   We also have the following Corollary (let $g=f$ in the above Theorem).
   
-  \begin{corollary}[Plancharel Identity]
   For $f \in \mathcal{S}$, $||f||_{L^2} = ||\hat{f}||_{L^2}$
-  \end{corollary}
  
  Now, recall that Schwartz functions are dense in $L^2(R^n)$.  If we can successfully define the Fourier Transforms on $L^2(\R^n)$, then we can extend all of the above machinery to all functions in $L^2(\R^n)$.  First, notice that the Fourier Transform as defined above will not work for arbitrary $L^2(\R^n)$ functions.  However, we can define the transform as follows.
  
- \begin{definition}[Fourier Transform of functions in $L^2(\R^n)$]
  
  \begin{equation}
  \hat{f}(y) = \lim_{n \rightarrow \infty} \int_{-n}^n f(x)e^{- 2 \pi i ^ty x} dx
  \end{equation}
  
  \noindent where convergence is in $L^2(\R^n)$.
- \end{definition}
  
  This definition makes sense; we can apply the Dominated Convergence Theorem to show that this Fourier Transform is well-defined.  With a bit of bootstrapping, the properties above will now follow for the Fourier Integrals on $L^2(\R^n)$.  In particular, we see that the Fourier Transform is an isometric isomorphism of $L^2(\R^n)$.
  
