@@ -16,6 +16,34 @@
 	<script type="text/javascript"
 	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
+	<script src"https://d3js.org/d3.v4.js"></script>
+		<!-- D3 TEST WITH LINE PATH -->
+
+		<script>
+			// This is the data for the STS
+			var lineData = [ { "x": 10, "y": 10}, { "x": 110, "y": 10},
+					 { "x": 110, "y": 110}, { "x": 210, "y": 110},
+					 { "x": 210, "y": 210}, { "x": 10, "y": 210}];
+
+
+			// This is the accessor function 
+			var lineFunction = d3.svg.line()
+						.x(function(d) { return d.x; })
+						.y(function(d) { return d.y; })
+						.interpolate("linear");
+
+			//The SVG Container
+			var svgContainer = d3.select("body").append("svg")
+						.attr("width",600)
+						.attr("height",400);
+
+			//The line SVG Path we draw
+			var STS = svgContainer.append("path")
+					.attr("d", lineFunction(lineData))
+					.attr("stroke", "blue")
+					.attr("stroke-width", 4)
+					.attr("fill", "none");
+		</script>
 </head>
 <div class="container".
 <body>
@@ -58,14 +86,51 @@
 		<p>
 		In this section, we will draw an important connection between Laplacian and the Fourier Transform.  We will see that the Fourier Transform provides us with a type of spectral theorem for the Laplacian.  The bulk of this section follows the presentation in Terras' text ~\cite{Ter13}.</p>
 		
-		<svg>
+		<!--<svg id="dataviz_area" height=400 width=600></svg>-->
+		<!--<svg>-->
 			<!--<circle style="fill: #69b3a2" stroke="black" cx=100 cy=50 r=20></circle>-->
 			<!--<line x1="0" y1="0" x2="10" y2="10" stroke="black"></line>-->
 			<!--<rect x="0" y="0" width="10" height="10"></rect>-->
 			<!--<ellipse cx="10" cy="5" rx="10" ry="5"></ellipse>-->
-			<polygon style="fill: #69b3a2" stroke="black" points="0,0 100,50 100,0 200,200 100,150 0,200"></polygon>
+			<!--<polygon style="fill: #69b3a2" stroke="black" points="0,0 100,50 100,0 200,200 100,150 0,200"></polygon>-->
 			<!--<path d="M65,10 a50,25 0 1,0 50,25"></path>-->
-		</svg>
+			<!--</svg>-->
+
+		<!--<script>
+			svg.append("polygon")
+				.attr("points", 50,50 ).style("fill","red")
+		</script>-->
+
+
+		<!-- D3 TEST WITH LINE PATH -->
+
+<!--		<script>
+			// This is the data for the STS
+			var lineData = [ { "x": 10, "y": 10}, { "x": 110, "y": 10},
+					 { "x": 110, "y": 110}, { "x": 210, "y": 110},
+					 { "x": 210, "y": 210}, { "x": 10, "y": 210}];
+
+
+			// This is the accessor function 
+			var lineFunction = d3.svg.line()
+						.x(function(d) { return d.x; })
+						.y(function(d) { return d.y; })
+						.interpolate("linear");
+
+			//The SVG Container
+			var svgContainer = d3.select("body").append("svg")
+						.attr("width",600)
+						.attr("height",400);
+
+			//The line SVG Path we draw
+			var STS = svgContainer.append("path")
+					.attr("d", lineFunction(lineData))
+					.attr("stroke", "blue")
+					.attr("stroke-width", 4)
+					.attr("fill", "none");
+</script>-->
+
+
 
 		<p>
  The \emph{Schwartz space}, $\mathcal{S}$ is the space of all infinitely differentiable functions $f: \mathbb{R}^n \rightarrow \C$ such that $\lvert x^a D^b f \rvert$ is bounded for all $a,b \in \Z^n$, with $a_j \geq 0$ and $b_j \geq 0$.  Functions in the Schwartz space are called \emph{Schwartz functions}.  Here we use standard multi-index notation:
