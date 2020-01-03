@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>STS Animation</title>
+		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var lineData = [ { "x": 10, "y": 10}, { "x": 110, "y": 10}, 
+					 { "x": 110, "y": 110}, { "x": 210, "y": 110}, 
+					 { "x": 210, "y": 210}, { "x": 10, "y": 210}];
+
+			var lineFunction = d3.svg.line()
+						.x(function(d) { return d.x; })
+						.y(function(d) { return d.y; })
+						.interpolate("linear");
+			
+			var svgContainer = d3.select("body").append("svg")
+						.attr("width",600)
+						.attr("height",400);
+
+			var STS = svgContainer.append("path")
+						.attr("d", lineFunction(lineData))
+						.attr("stroke","blue")
+						.attr("stroke-width",4)
+						.attr("fill","none");
+		</script>
+	</body>
+</html>
