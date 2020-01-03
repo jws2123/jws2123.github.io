@@ -6,11 +6,17 @@
 		<script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
 	</head>
 	<body>
+		<button onclick="triggerTransition()">Apply Shear in X direction</button>
 		<script type="text/javascript">
 			var lineData = [ { "x": 10, "y": 10}, { "x": 110, "y": 10}, 
 					 { "x": 110, "y": 110}, { "x": 210, "y": 110}, 
 					 { "x": 210, "y": 210}, { "x": 10, "y": 210}, 
 					 { "x": 10, "y": 10}];
+
+			var transitionData = [ { "x": 410, "y": 10}, { "x": 510, "y": 10},
+					       { "x": 310, "y": 110}, { "x": 410, "y": 110},
+					       { "x": 210, "y": 210}, { "x": 10, "y": 210},
+					       { "x": 410, "y": 10}];
 
 			var lineFunction = d3.line()
 						.x(function(d) { return d.x; })
@@ -25,7 +31,17 @@
 						.attr("d", lineFunction(lineData))
 						.attr("stroke","blue")
 						.attr("stroke-width",4)
-						.attr("fill","none");
+						.attr("fill","none")
+						.attr("id","mySTS");
+			
+			function triggerTransition(){
+				d3.select("#mySTS")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(transitionData))
+			}
+
 		</script>
 	</body>
 </html>
