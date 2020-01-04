@@ -7,6 +7,7 @@
 	</head>
 	<body>
 		<button onclick="triggerTransition()">Apply Shear in X direction</button>
+		<button onclick="triggerReset()">Undo Shear in X direction</button>
 		<script type="text/javascript">
 			var lineData = [ { "x": 10, "y": 10}, { "x": 110, "y": 10}, 
 					 { "x": 110, "y": 110}, { "x": 210, "y": 110}, 
@@ -40,6 +41,14 @@
 				  .delay(100)
 				  .duration(4000)
 				  .attr("d", lineFunction(transitionData))
+			}
+
+			function triggerReset(){
+				d3.select("#mySTS")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(lineData))
 			}
 
 		</script>
