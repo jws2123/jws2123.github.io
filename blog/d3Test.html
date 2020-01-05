@@ -151,6 +151,33 @@
 			var tA1Data = [{ "x": 410, "y": 10}, { "x": 510, "y": 10}, 
 				       { "x": 410, "y": 60}, { "x": 410, "y": 10}];
 
+			var tA2Data = [{ "x": 410, "y": 10}, { "x": 410, "y": 60},
+				       { "x": 310, "y": 110}, { "x": 310, "y": 60},
+				       { "x": 410, "y": 10}];
+
+			var tA3Data = [{ "x": 310, "y": 60}, {"x": 310, "y": 110},
+				       { "x": 210, "y": 110}, { "x": 310, "y": 60}];
+
+			var tB1Data = [{ "x": 210, "y": 110}, { "x": 310, "y": 110},
+				       { "x": 210, "y": 160}, { "x": 210, "y": 110}];
+
+			var tB2Data = [{ "x": 210, "y": 110}, { "x": 210, "y": 160}, 
+				       { "x": 110, "y": 210}, { "x": 110, "y": 160}, 
+				       { "x": 210, "y": 110}];
+
+			var tB3Data = [{ "x": 110, "y": 160}, { "x": 110, "y": 210},
+				       { "x": 10, "y": 210}, { "x": 110, "y": 160}];
+
+			var tC1Data = [{ "x": 310, "y": 110}, { "x": 410, "y": 110}, 
+				       { "x": 310, "y": 160}, { "x": 310, "y": 110}];
+
+			var tC2Data = [{ "x": 310, "y": 110}, { "x": 310, "y": 160},
+				       { "x": 210, "y": 210}, { "x": 210, "y": 160}, 
+				       { "x": 310, "y": 110}];
+
+			var tC3Data = [{ "x": 210, "y": 160}, { "x": 210, "y": 210},
+				       { "x": 110, "y": 210}, { "x": 210, "y": 160}];
+
 			var cA1Data = [{ "x": 10, "y": 10}, { "x": 110, "y": 10},
 				       { "x": 10, "y": 60}, { "x": 10, "y": 10}];
 
@@ -160,6 +187,54 @@
 				  .delay(100)
 				  .duration(4000)
 				  .attr("d", lineFunction(tA1Data))
+
+				d3.select("#A2")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(tA2Data))
+
+				d3.select("#A3")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(tA3Data))
+
+				d3.select("#B1")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(tB1Data))
+
+				d3.select("#B2")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(tB2Data))
+
+				d3.select("#B3")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(tB3Data))
+
+				d3.select("#C1")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(tC1Data))
+
+				d3.select("#C2")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(tC2Data))
+
+				d3.select("#C3")
+				  .transition()
+				  .delay(100)
+				  .duration(4000)
+				  .attr("d", lineFunction(tC3Data))
 
 			}
 
