@@ -51,12 +51,6 @@
 				  .attr("d", lineFunction(lineData))
 			}
 
-		</script>
-
-		<button onclick="triggerMultiShear()">Apply Shear in X direction</button>
-		<button onclick="triggerCutPaste()">Cut and Paste</button>
-
-		<script type=text/javascript>
 			var A1Data = [ { "x": 10, "y": 10}, { "x": 110, "y": 10},
 					   { "x": 110, "y": 60}, { "x": 10, "y": 10}];
 
@@ -164,7 +158,7 @@
 				d3.select("A1")
 				  .transition()
 				  .delay(100)
-				  .duration(2000)
+				  .duration(4000)
 				  .attr("d", lineFunction(tA1Data))
 
 			}
@@ -173,10 +167,13 @@
 				d3.select("A1")
 				  .transition()
 				  .delay(100)
-				  .duration(2000)
+				  .duration(4000)
 				  .attr("d", lineFunction(cA1Data))
 
 			}
+
 		</script>
+		<button onclick="triggerMultiShear()">Apply Shear in X direction</button>
+		<button onclick="triggerCutPaste()">Cut and Paste</button>
 	</body>
 </html>
