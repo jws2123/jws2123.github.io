@@ -178,8 +178,45 @@
 			var tC3Data = [{ "x": 210, "y": 160}, { "x": 210, "y": 210},
 				       { "x": 110, "y": 210}, { "x": 210, "y": 160}];
 
-			var cA1Data = [{ "x": 10, "y": 10}, { "x": 110, "y": 10},
+			// Step 1 Cut and Paste
+
+			var s1A1Data = [{ "x": 310, "y": 10}, { "x": 410, "y": 10},
+				       { "x": 310, "y": 60}, { "x": 310, "y": 10}];
+
+			// Step 2 Cut and Paste
+
+			var s2A1Data = [{ "x": 210, "y": 10}, { "x": 310, "y": 10},
+				       { "x": 210, "y": 60}, { "x": 210, "y": 10}];
+
+			var s2A2Data = [{ "x": 310, "y": 10}, { "x": 310, "y": 60},
+				       { "x": 210, "y": 110}, { "x": 210, "y": 60},
+				       { "x": 310, "y": 10}];
+
+			// Step 3 Cut and Paste
+
+			var s3C1Data = [{ "x": 110, "y": 110}, { "x": 210, "y": 110}, 
+				       { "x": 110, "y": 160}, { "x": 110, "y": 110}];
+
+			// Step 4 Cut and Paste 
+
+			var s4A1Data = [{ "x": 10, "y": 10}, { "x": 110, "y": 10},
 				       { "x": 10, "y": 60}, { "x": 10, "y": 10}];
+
+			var s4A2Data = [{ "x": 110, "y": 10}, { "x": 110, "y": 60},
+				       { "x": 10, "y": 110}, { "x": 10, "y": 60},
+				       { "x": 110, "y": 10}];
+
+			var s4A3Data = [{ "x": 110, "y": 60}, {"x": 110, "y": 110},
+				       { "x": 10, "y": 110}, { "x": 110, "y": 60}];
+
+			var s4B1Data = [{ "x": 10, "y": 110}, { "x": 110, "y": 110},
+				       { "x": 10, "y": 160}, { "x": 10, "y": 110}];
+
+			var s4C2Data = [{ "x": 110, "y": 110}, { "x": 110, "y": 160},
+				       { "x": 10, "y": 210}, { "x": 10, "y": 160}, 
+				       { "x": 110, "y": 110}];
+
+			// Transition functions
 
 			function triggerMultiShear(){
 				d3.select("#A1")
@@ -239,12 +276,65 @@
 			}
 
 			function triggerCutPaste(){
+
+				// Step 1
+
 				d3.select("#A1")
 				  .transition()
 				  .delay(100)
-				  .duration(4000)
-				  .attr("d", lineFunction(cA1Data))
+				  .duration(1000)
+				  .attr("d", lineFunction(s1A1Data))
+				
+				// Step 2
+				d3.select("#A1")
+				  .transition()
+				  .delay(1200)
+				  .duration(1000)
+				  .attr("d", lineFunction(s2A1Data))
 
+				d3.select("#A2")
+				  .transition()
+				  .delay(1200)
+				  .duration(1000)
+				  .attr("d", lineFunction(s2A2Data))
+
+				//Step 3
+				d3.select("#C1")
+				  .transition()
+				  .delay(2300)
+				  .duration(2000)
+				  .attr("d", lineFunction(s3C1Data))
+
+				//Step 4
+				d3.select("#A1")
+				  .transition()
+				  .delay(4400)
+				  .duration(2000)
+				  .attr("d", lineFunction(s4A1Data))
+
+				d3.select("#A2")
+				  .transition()
+				  .delay(4400)
+				  .duration(2000)
+				  .attr("d", lineFunction(s4A2Data))
+
+				d3.select("#A3")
+				  .transition()
+				  .delay(4400)
+				  .duration(2000)
+				  .attr("d", lineFunction(s4A3Data))
+
+				d3.select("#B1")
+				  .transition()
+				  .delay(4400)
+				  .duration(2000)
+				  .attr("d", lineFunction(s4B1Data))
+
+				d3.select("#C2")
+				  .transition()
+				  .delay(4400)
+				  .duration(2000)
+				  .attr("d", lineFunction(s4C2Data))
 			}
 
 		</script>
