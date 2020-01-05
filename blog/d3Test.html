@@ -6,7 +6,7 @@
 		<script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
 	</head>
 	<body>
-		<button onclick="triggerTransition()">Apply Shear in X direction</button>
+		<button onclick="triggerShear()">Apply Shear in X direction</button>
 		<button onclick="triggerReset()">Undo Shear in X direction</button>
 		<script type="text/javascript">
 			var lineData = [ { "x": 10, "y": 10}, { "x": 110, "y": 10}, 
@@ -24,18 +24,18 @@
 						.y(function(d) { return d.y; })
 						.curve(d3.curveLinear);
 			
-			var svgContainer = d3.select("body").append("svg")
+			var svgContainer1 = d3.select("body").append("svg")
 						.attr("width",600)
 						.attr("height",400);
 
-			var STS = svgContainer.append("path")
+			var STS = svgContainer1.append("path")
 						.attr("d", lineFunction(lineData))
 						.attr("stroke","blue")
 						.attr("stroke-width",4)
 						.attr("fill","none")
 						.attr("id","mySTS");
 			
-			function triggerTransition(){
+			function triggerShear(){
 				d3.select("#mySTS")
 				  .transition()
 				  .delay(100)
@@ -51,6 +51,132 @@
 				  .attr("d", lineFunction(lineData))
 			}
 
+		</script>
+
+		<button onclick="triggerMultiShear()">Apply Shear in X direction</button>
+		<button onclick="triggerCutPaste()">Cut and Paste</button>
+
+		<script type=text/javascript>
+			var A1Data = [ { "x": 10, "y": 10}, { "x": 110, "y": 10},
+					   { "x": 110, "y": 60}, { "x": 10, "y": 10}];
+
+			var A2Data = [ { "x": 10, "y": 10}, { "x": 110, "y": 60}, 
+					   { "x": 110, "y": 110}, { "x": 10, "y": 60},
+					   { "x": 10, "y": 10}];
+
+			var A3Data = [ { "x": 10, "y": 60}, { "x": 110, "y": 110},
+					   { "x": 10, "y": 110}, { "x": 10, "y": 60}];
+
+			var B1Data = [ { "x": 10, "y": 110}, { "x": 110, "y": 110}, 
+					   { "x": 110, "y": 160}, { "x": 10, "y": 110}];
+
+			var B2Data = [ { "x": 10, "y": 110}, { "x": 110, "y": 160}, 
+					   { "x": 110, "y": 210}, { "x": 10, "y": 160},
+					   { "x": 10, "y": 110}];
+
+			var B3Data = [ { "x": 10, "y": 160}, { "x": 110, "y": 210},
+					   { "x": 10, "y": 210}, { "x": 10, "y": 160}];
+
+			var C1Data = [ { "x": 110, "y": 110}, { "x": 210, "y": 110}, 
+					   { "x": 210, "y": 160}, { "x": 110, "y": 110}];
+
+			var C2Data = [ { "x": 110, "y": 110}, { "x": 210, "y": 110}, 
+					   { "x": 210, "y": 210}, { "x": 110, "y": 160},
+					   { "x": 110, "y": 110}];
+
+			var C3Data = [ { "x": 110, "y": 160}, { "x": 210, "y": 210},
+					   { "x": 110, "y": 210}, { "x": 110, "y": 160}];
+
+			var svgContainer2 = d3.select("body").append("svg")
+						.attr("width",600)
+						.attr("height",400);
+
+			var A1 = svgContainer2.append("path")
+						.attr("d", lineFunction(A1Data))
+						.attr("stroke","orange")
+						.attr("stroke-width",3)
+						.attr("fill", "none")
+						.attr("id", "A1");
+
+			var A2 = svgContainer2.append("path")
+						.attr("d", lineFunction(A2Data))
+						.attr("stroke","orange")
+						.attr("stroke-width",3)
+						.attr("fill", "none")
+						.attr("id", "A2");
+
+			var A3 = svgContainer2.append("path")
+						.attr("d", lineFunction(A3Data))
+						.attr("stroke","orange")
+						.attr("stroke-width",3)
+						.attr("fill", "none")
+						.attr("id", "A3");
+
+			var B1 = svgContainer2.append("path")
+						.attr("d", lineFunction(B1Data))
+						.attr("stroke","blue")
+						.attr("stroke-width",3)
+						.attr("fill", "none")
+						.attr("id", "B1");
+
+			var B2 = svgContainer2.append("path")
+						.attr("d", lineFunction(B2Data))
+						.attr("stroke","blue")
+						.attr("stroke-width",3)
+						.attr("fill", "none")
+						.attr("id", "B2");
+
+			var B3 = svgContainer2.append("path")
+						.attr("d", lineFunction(B3Data))
+						.attr("stroke","blue")
+						.attr("stroke-width",3)
+						.attr("fill", "none")
+						.attr("id", "B3");
+
+			var C1 = svgContainer2.append("path")
+						.attr("d", lineFunction(C1Data))
+						.attr("stroke","green")
+						.attr("stroke-width",3)
+						.attr("fill", "none")
+						.attr("id", "C1");
+
+			var C2 = svgContainer2.append("path")
+						.attr("d", lineFunction(C2Data))
+						.attr("stroke","green")
+						.attr("stroke-width",3)
+						.attr("fill", "none")
+						.attr("id", "C2");
+
+			var C3 = svgContainer2.append("path")
+						.attr("d", lineFunction(C3Data))
+						.attr("stroke","green")
+						.attr("stroke-width",3)
+						.attr("fill", "none")
+						.attr("id", "C3");
+
+			var tA1Data = [{ "x": 410, "y": 10}, { "x": 510, "y": 10}, 
+				       { "x": 410, "y": 60}, { "x": 410, "y": 10}];
+
+			var cA1Data = [{ "x": 10, "y": 10}, { "x": 110, "y": 10},
+				       { "x": 10, "y": 60}, { "x": 10, "y": 10}];
+
+			function triggerMultiShear(){
+				d3.select("A1")
+				  .transition()
+				  .delay(100)
+				  .duration(2000)
+				  .attr("d", lineFunction(tA1Data))
+
+			}
+
+			function triggerCutPaste(){
+				d3.select("A1")
+				  .transition()
+				  .delay(100)
+				  .duration(2000)
+				  .attr("d", lineFunction(cA1Data))
+
+			}
 		</script>
 	</body>
 </html>
