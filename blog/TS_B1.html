@@ -83,27 +83,26 @@
 		First Definition of a Translation Surface
 		</h2>
 		<p>
-		We begin by defining the primary object studied in this paper, a translation surface.  
+		We begin by defining the primary object studied in this paper, a translation surface.
+		</p>
   
- \begin{definition}[Translation Surface as a Complex Surface with Singularities]
+		<h4>
+		Translation Surface as a Complex Surface with Singularities
+		</h4>
+
  Let $X$ be a closed, topological surface and let $\Sigma = \{ p_1, p_2, \cdots, p_n \}$ be a finite collection of points on the surface such that 
  
- \begin{enumerate}
- \item $X \setminus \Sigma$ has a translation structure, i.e. it has an atlas of charts into $\C$ such that the transition maps are translations.  
- \item In a neighborhood of each $p_i \in \Sigma$, there is a chart into $2(m_i + 1)$ half-disks glued as pictured below.  Here, we are allowing cone angles at the singularity, where the angle around the point $p_i$ is $2\pi(m_i + 1)$ for $m_i$ a positive integer. 
- \end{enumerate}
+ <ol>
+ <li>  $X \setminus \Sigma$ has a translation structure, i.e. it has an atlas of charts into $\mathbb{C}$ such that the transition maps are translations.</li>  
+ <li> In a neighborhood of each $p_i \in \Sigma$, there is a chart into $2(m_i + 1)$ half-disks glued as pictured below.  Here, we are allowing cone angles at the singularity, where the angle around the point $p_i$ is $2\pi(m_i + 1)$ for $m_i$ a positive integer.</li> 
+ </ol>
+ 
+ <p>
+ We call the points $p_i$ singularities.  Since $X\setminus \Sigma$ has a complex structure, it is orientable.  Additionally, the cone angles at the singularities are multiples of $2\pi$, so the holonomy around these points is trivial.  Thus, we can make a global choice of "north" on the surface away from $\Sigma$.  By default, we typically choose the direction associated with the positive imaginary axis in the charts.  This surface, equipped the the charts described and a direction indicating north, is called a <i>translation surface.</i>  
+ </p>
 
- <!--\begin{figure}[h]
-  \centering
-  \includegraphics[scale=0.1]{HalfDisks}
-  \caption{Gluing Half-Disks}
-  \label{fig:HalfDisks} 
-  \end{figure}-->
- 
- We call the points $p_i$ singularities.  Since $X\setminus \Sigma$ has a complex structure, it is orientable.  Additionally, the cone angles at the singularities are multiples of $2\pi$, so the holonomy around these points is trivial.  Thus, we can make a global choice of "north" on the surface away from $\Sigma$.  By default, we typically choose the direction associated with the positive imaginary axis in the charts.  This surface, equipped the the charts described and a direction indicating north, is called a \emph{translation surface}.  
- \end{definition}
- 
- There is a canonical choice of metric that comes along with this definition:  in each chart, we can pull back the (flat) Euclidean metric on $\C$.  Since the transition maps are translations, the differential of any transition map is the identity.  Thus, we can glue the metric together to get a flat metric on $X\setminus \Sigma$.  This means that we can impose a flat structure on a compact Riemann Surface.  The catch is that we will end up with singularities (a non-empty set $\Sigma$) where we have accumulation of curvature unless we have a genus 1 surface.  This is a consequence of the Gauss-Bonnet theorem~\cite{LeeRM19}.
+ <p> 
+ There is a canonical choice of metric that comes along with this definition:  in each chart, we can pull back the (flat) Euclidean metric on $\mathbb{C}$.  Since the transition maps are translations, the differential of any transition map is the identity.  Thus, we can glue the metric together to get a flat metric on $X\setminus \Sigma$.  This means that we can impose a flat structure on a compact Riemann Surface.  The catch is that we will end up with singularities (a non-empty set $\Sigma$) where we have accumulation of curvature unless we have a genus 1 surface.  This is a consequence of the Gauss-Bonnet theorem [#] ~\cite{LeeRM19}.
 		</p>
 
 		<br>
