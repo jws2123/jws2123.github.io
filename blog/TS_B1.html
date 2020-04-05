@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="shortcut icon" media="all" href="http://sub.mersion.cc/favicon.ico" type="image/x-icon" />
+	<link rel="icon" media="all" href="http://sub.mersion.cc/favicon.ico" type="image/vnd.microsoft.icon" />
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Abel">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Titillium+Web">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>
+	Josh Southerland
+	</title>
+	<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script type="text/javascript"
+	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+		<!-- D3 TEST WITH LINE PATH -->
+
+	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js">
+			// This is the data for the STS
+			var lineData = [ { "x": 10, "y": 10}, { "x": 110, "y": 10},
+					 { "x": 110, "y": 110}, { "x": 210, "y": 110},
+					 { "x": 210, "y": 210}, { "x": 10, "y": 210}];
+
+
+			// This is the accessor function 
+			var lineFunction = d3.svg.line()
+						.x(function(d) { return d.x; })
+						.y(function(d) { return d.y; })
+						.interpolate("linear");
+
+			//The SVG Container
+			var svgContainer = d3.select("body").append("svg")
+						.attr("width",600)
+						.attr("height",400);
+
+			//The line SVG Path we draw
+			var STS = svgContainer.append("path")
+					.attr("d", lineFunction(lineData))
+					.attr("stroke", "blue")
+					.attr("stroke-width", 4)
+					.attr("fill", "none");
+	</script>
+</head>
+<div class="container".
+<body>
+	<div class="links">
+		<h1 id="pad">
+		immersion
+		</h1>
+		<h4 id="pad">
+		Quoi voulez-vous savoir?  
+		</h4>`
+		<p>
+		<ul class="l">
+			<li><a href="" class="nav">Fourier Analysis</a></li>
+			<li><a href="" class="nav">Spectral Properties of the Laplacian</a></li>
+			<li><a href="" class="nav">Continued Fractions</a></li>
+			<li><a href="" class="nav">Lie Groups and Lie Algebras</a></li>
+			<li><a href="" class="nav">Geodesic Flow</a></li>
+			<li><a href="" class="nav">Algebraic Topology</a></li>
+			<li><a href="" class="nav">Square-Tiled Surfaces</a></li>
+			<li><a href="" class="nav">Translation Surfaces</a></li>
+			<li><a href="" class="nav">Modular Forms and Eisenstein Series</a></li>
+			<li><a href="" class="nav">Selberg Trace Formula</a></li>
+			<li><a href="" class="nav">The Laplacian and Geodesics</a></li>
+			<li><a href="" class="nav">Modular Forms</a></li>
+			<li><a href="" class="nav">Cusp Forms</a></li>
+		</ul>
+		</p>
+		<p class="l">
+		Back to my <a href="http://sub.mersion.cc" class="nav">home page</a>
+		</p>
+	</div>
+	<div class="content">
+		<p>
+		<a href="http://sub.mersion.cc/blog">Back</a> to the blog home page.
+		</p>
+
+		<h2>
+		First Definition of a Translation Surface
+		</h2>
+		<p>
+		We begin by defining the primary object studied in this paper, a translation surface.  
+  
+ \begin{definition}[Translation Surface as a Complex Surface with Singularities]
+ Let $X$ be a closed, topological surface and let $\Sigma = \{ p_1, p_2, \cdots, p_n \}$ be a finite collection of points on the surface such that 
+ 
+ \begin{enumerate}
+ \item $X \setminus \Sigma$ has a translation structure, i.e. it has an atlas of charts into $\C$ such that the transition maps are translations.  
+ \item In a neighborhood of each $p_i \in \Sigma$, there is a chart into $2(m_i + 1)$ half-disks glued as pictured below.  Here, we are allowing cone angles at the singularity, where the angle around the point $p_i$ is $2\pi(m_i + 1)$ for $m_i$ a positive integer. 
+ \end{enumerate}
+
+ <!--\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.1]{HalfDisks}
+  \caption{Gluing Half-Disks}
+  \label{fig:HalfDisks} 
+  \end{figure}-->
+ 
+ We call the points $p_i$ singularities.  Since $X\setminus \Sigma$ has a complex structure, it is orientable.  Additionally, the cone angles at the singularities are multiples of $2\pi$, so the holonomy around these points is trivial.  Thus, we can make a global choice of "north" on the surface away from $\Sigma$.  By default, we typically choose the direction associated with the positive imaginary axis in the charts.  This surface, equipped the the charts described and a direction indicating north, is called a \emph{translation surface}.  
+ \end{definition}
+ 
+ There is a canonical choice of metric that comes along with this definition:  in each chart, we can pull back the (flat) Euclidean metric on $\C$.  Since the transition maps are translations, the differential of any transition map is the identity.  Thus, we can glue the metric together to get a flat metric on $X\setminus \Sigma$.  This means that we can impose a flat structure on a compact Riemann Surface.  The catch is that we will end up with singularities (a non-empty set $\Sigma$) where we have accumulation of curvature unless we have a genus 1 surface.  This is a consequence of the Gauss-Bonnet theorem~\cite{LeeRM19}.
+		</p>
+
+		<br>
+		<div class="license">
+		<p><a href="http://creativecommons.org/licenses/by/4.0/" rel="license" target="_blank"><img style="border-width: 0;" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" /></p>
+		<p></a>  This work is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/" rel="license" target="_blank">Creative Commons Attribution 4.0 International License</a>.</p>
+		</div>
+	</div>
+</body>
+</div>
+</html>
+
+
+
