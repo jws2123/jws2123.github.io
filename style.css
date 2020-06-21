@@ -113,9 +113,27 @@ a:hover {
 	text-align: center;
 }
 
+.picsmall {
+	display: flex;
+	background-image: url("m324/vector.jpg");
+	background-size: cover;
+	height: 100%;
+	width: 25%;
+	margin: auto;
+	text-align: center;
+}
+
 .content {
 	height: 100%;
 	width: 50%;
+	overflow: scroll;
+	padding: 3%;
+	background-color: whitesmoke;
+}
+
+.content2 {
+	height: 100%;
+	width: 75%;
 	overflow: scroll;
 	padding: 3%;
 	background-color: whitesmoke;
