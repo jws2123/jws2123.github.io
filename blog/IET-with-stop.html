@@ -236,6 +236,9 @@
 
         <div class="card">
             <h2>Define Intervals</h2>
+            <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">
+                Use decimals or fractions (e.g., 0.5, 1/2, or 7/214)
+            </p>
             <div id="intervals-container"></div>
             <button class="btn-add" onclick="addInterval()">Add Interval</button>
 
@@ -247,13 +250,16 @@
             <h2>Input</h2>
             
             <div class="input-group">
-                <label>Initial Point (decimal or fraction, e.g., 1/4 or 0.25)</label>
-                <input type="text" id="inputNumber" class="flex-1" value="0.25" placeholder="e.g., 0.25 or 1/4">
+                <label>Initial Point (decimal or fraction, e.g., 1/4, 7/214, or 0.25)</label>
+                <input type="text" id="inputNumber" class="flex-1" value="0.25" placeholder="e.g., 0.25, 1/4, or 7/214">
             </div>
 
             <div class="input-group">
-                <label>Selected Intervals (stop when hit any of these)</label>
+                <label>Selected Intervals (optional - leave unchecked to compute all iterates)</label>
                 <div id="interval-checkboxes"></div>
+                <p style="color: #6b7280; font-size: 0.75rem; margin-top: 0.5rem;">
+                    Check one or more intervals to stop when any selected interval is hit
+                </p>
             </div>
 
             <div class="input-group">
@@ -278,7 +284,7 @@
             { label: 'C', length: '0.2' }
         ];
         let permutation = ['B', 'C', 'A'];
-        let selectedIntervals = new Set(['B']);
+        let selectedIntervals = new Set();
 
         function renderIntervals() {
             const container = document.getElementById('intervals-container');
@@ -376,11 +382,6 @@
         function computeIET() {
             clearError();
             
-            if (selectedIntervals.size === 0) {
-                showError('Please select at least one interval to track');
-                return;
-            }
-            
             try {
                 const x = parseRational(document.getElementById('inputNumber').value);
                 const n = parseInt(document.getElementById('numIterates').value);
@@ -396,9 +397,9 @@
                 }
 
                 const lengths = intervals.map(int => {
-                    const len = parseFloat(int.length);
+                    const len = parseRational(int.length);
                     if (isNaN(len) || len <= 0) {
-                        throw new Error(`Invalid length for interval ${int.label}`);
+                        throw new Error(`Invalid length for interval ${int.label}: must be a positive number`);
                     }
                     return { label: int.label, length: len };
                 });
@@ -465,22 +466,24 @@
                     
                     iterates.push(current);
 
-                    // Check if current landed in any selected interval
-                    for (const label of selectedIntervals) {
-                        const selectedTopInt = topIntervals.find(int => int.label === label);
-                        if (current >= selectedTopInt.start && current < selectedTopInt.end) {
-                            hitInterval = label;
-                            break;
+                    // Only check for hits if user selected intervals
+                    if (selectedIntervals.size > 0) {
+                        for (const label of selectedIntervals) {
+                            const selectedTopInt = topIntervals.find(int => int.label === label);
+                            if (current >= selectedTopInt.start && current < selectedTopInt.end) {
+                                hitInterval = label;
+                                break;
+                            }
+                            
+                            if (Math.abs(current - selectedTopInt.end) < 1e-10 && 
+                                Math.abs(selectedTopInt.end - 1.0) < 1e-10) {
+                                hitInterval = label;
+                                break;
+                            }
                         }
-                        
-                        if (Math.abs(current - selectedTopInt.end) < 1e-10 && 
-                            Math.abs(selectedTopInt.end - 1.0) < 1e-10) {
-                            hitInterval = label;
-                            break;
-                        }
-                    }
 
-                    if (hitInterval) break;
+                        if (hitInterval) break;
+                    }
                 }
 
                 displayResults(iterates, topIntervals, bottomIntervals, hitInterval);
