@@ -227,6 +227,25 @@
         .iterate-item {
             padding: 0.25rem 0;
         }
+        
+        .format-toggle {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .format-toggle label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+            cursor: pointer;
+        }
+        
+        .format-toggle input[type="radio"] {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -285,6 +304,7 @@
         ];
         let permutation = ['B', 'C', 'A'];
         let selectedIntervals = new Set();
+        let displayFormat = 'decimal'; // 'decimal' or 'fraction'
 
         function renderIntervals() {
             const container = document.getElementById('intervals-container');
@@ -368,6 +388,74 @@
                 return num / den;
             }
             return parseFloat(str);
+        }
+
+        function gcd(a, b) {
+            a = Math.abs(a);
+            b = Math.abs(b);
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        function decimalToFraction(decimal, maxDenominator = 1000000) {
+            // Handle exact integers
+            if (Math.abs(decimal - Math.round(decimal)) < 1e-9) {
+                return { numerator: Math.round(decimal), denominator: 1 };
+            }
+
+            // Handle negative numbers
+            const sign = decimal < 0 ? -1 : 1;
+            decimal = Math.abs(decimal);
+
+            // Use continued fractions algorithm for better approximation
+            let tolerance = 1e-9;
+            let h1 = 1, h2 = 0, k1 = 0, k2 = 1;
+            let b = decimal;
+            
+            let iterations = 0;
+            const maxIterations = 50;
+            
+            do {
+                let a = Math.floor(b);
+                let aux = h1;
+                h1 = a * h1 + h2;
+                h2 = aux;
+                aux = k1;
+                k1 = a * k1 + k2;
+                k2 = aux;
+                
+                if (Math.abs(b - a) < tolerance) break;
+                b = 1 / (b - a);
+                
+                if (k1 > maxDenominator) {
+                    // Use previous convergent
+                    k1 = k2;
+                    h1 = h2;
+                    break;
+                }
+                
+                iterations++;
+                if (iterations >= maxIterations) break;
+                
+            } while (Math.abs(decimal - h1 / k1) > tolerance);
+
+            return { numerator: sign * h1, denominator: k1 };
+        }
+
+        function formatNumber(value) {
+            if (displayFormat === 'fraction') {
+                const frac = decimalToFraction(value);
+                if (frac.denominator === 1) {
+                    return frac.numerator.toString();
+                }
+                return `${frac.numerator}/${frac.denominator}`;
+            } else {
+                return value.toFixed(10);
+            }
         }
 
         function showError(message) {
@@ -511,7 +599,7 @@
             for (const int of topIntervals) {
                 const isSelected = selectedIntervals.has(int.label);
                 html += `<div ${isSelected ? 'class="highlighted"' : ''}>
-                    ${int.label}: [${int.start.toFixed(6)}, ${int.end.toFixed(6)})
+                    ${int.label}: [${formatNumber(int.start)}, ${formatNumber(int.end)})
                     ${isSelected ? ' ← Selected' : ''}
                 </div>`;
             }
@@ -519,19 +607,31 @@
             
             html += '<div class="info-box"><h3>Bottom Intervals (after permutation):</h3><div class="mono">';
             for (const int of bottomIntervals) {
-                html += `<div>${int.label}: [${int.start.toFixed(6)}, ${int.end.toFixed(6)})</div>`;
+                html += `<div>${int.label}: [${formatNumber(int.start)}, ${formatNumber(int.end)})</div>`;
             }
             html += '</div></div>';
             
-            html += '<div class="iterates-box"><h3>Iterates:</h3><div class="iterates-list">';
+            html += '<div class="iterates-box">';
+            html += '<div class="format-toggle">';
+            html += '<span style="font-weight: 600;">Display format:</span>';
+            html += `<label><input type="radio" name="format" value="decimal" ${displayFormat === 'decimal' ? 'checked' : ''} onchange="changeFormat('decimal')"> Decimal</label>`;
+            html += `<label><input type="radio" name="format" value="fraction" ${displayFormat === 'fraction' ? 'checked' : ''} onchange="changeFormat('fraction')"> Fraction</label>`;
+            html += '</div>';
+            html += '<h3>Iterates:</h3><div class="iterates-list">';
             for (let i = 0; i < iterates.length; i++) {
-                html += `<div class="iterate-item">x_${i} = ${iterates[i].toFixed(10)}</div>`;
+                html += `<div class="iterate-item">x_${i} = ${formatNumber(iterates[i])}</div>`;
             }
             html += '</div></div>';
             
             html += '</div>';
             
             container.innerHTML = html;
+        }
+
+        function changeFormat(format) {
+            displayFormat = format;
+            // Re-trigger computation to refresh display
+            computeIET();
         }
 
         // Initialize
