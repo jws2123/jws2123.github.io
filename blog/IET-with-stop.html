@@ -116,6 +116,30 @@
             background: #dc2626;
         }
         
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+        
         .perm-container {
             display: flex;
             gap: 0.75rem;
@@ -228,8 +252,8 @@
             </div>
 
             <div class="input-group">
-                <label>Selected Interval (stop when hit)</label>
-                <select id="selectedInterval" class="flex-1"></select>
+                <label>Selected Intervals (stop when hit any of these)</label>
+                <div id="interval-checkboxes"></div>
             </div>
 
             <div class="input-group">
@@ -254,7 +278,7 @@
             { label: 'C', length: '0.2' }
         ];
         let permutation = ['B', 'C', 'A'];
-        let selectedInterval = 'B';
+        let selectedIntervals = new Set(['B']);
 
         function renderIntervals() {
             const container = document.getElementById('intervals-container');
@@ -281,13 +305,25 @@
             `).join('');
         }
 
-        function renderSelectedInterval() {
-            const select = document.getElementById('selectedInterval');
-            select.innerHTML = intervals.map(int => 
-                `<option value="${int.label}" ${int.label === selectedInterval ? 'selected' : ''}>
-                    Interval ${int.label}
-                </option>`
-            ).join('');
+        function renderSelectedIntervals() {
+            const container = document.getElementById('interval-checkboxes');
+            container.className = 'checkbox-container';
+            container.innerHTML = intervals.map(int => `
+                <div class="checkbox-item">
+                    <input type="checkbox" id="check-${int.label}" 
+                           ${selectedIntervals.has(int.label) ? 'checked' : ''}
+                           onchange="toggleInterval('${int.label}', this.checked)">
+                    <label for="check-${int.label}">Interval ${int.label}</label>
+                </div>
+            `).join('');
+        }
+
+        function toggleInterval(label, checked) {
+            if (checked) {
+                selectedIntervals.add(label);
+            } else {
+                selectedIntervals.delete(label);
+            }
         }
 
         function addInterval() {
@@ -296,7 +332,7 @@
             permutation.push(newLabel);
             renderIntervals();
             renderPermutation();
-            renderSelectedInterval();
+            renderSelectedIntervals();
         }
 
         function removeInterval(index) {
@@ -304,12 +340,10 @@
             const removed = intervals[index];
             intervals.splice(index, 1);
             permutation = permutation.filter(label => label !== removed.label);
-            if (selectedInterval === removed.label) {
-                selectedInterval = intervals[0].label;
-            }
+            selectedIntervals.delete(removed.label);
             renderIntervals();
             renderPermutation();
-            renderSelectedInterval();
+            renderSelectedIntervals();
         }
 
         function updateIntervalLength(index, value) {
@@ -341,7 +375,11 @@
 
         function computeIET() {
             clearError();
-            selectedInterval = document.getElementById('selectedInterval').value;
+            
+            if (selectedIntervals.size === 0) {
+                showError('Please select at least one interval to track');
+                return;
+            }
             
             try {
                 const x = parseRational(document.getElementById('inputNumber').value);
@@ -403,9 +441,7 @@
 
                 const iterates = [x];
                 let current = x;
-                let hitSelected = false;
-
-                const selectedTopInt = topIntervals.find(int => int.label === selectedInterval);
+                let hitInterval = null;
 
                 for (let i = 0; i < n; i++) {
                     const topInt = topIntervals.find(int => 
@@ -429,34 +465,40 @@
                     
                     iterates.push(current);
 
-                    if (current >= selectedTopInt.start && current < selectedTopInt.end) {
-                        hitSelected = true;
-                        break;
+                    // Check if current landed in any selected interval
+                    for (const label of selectedIntervals) {
+                        const selectedTopInt = topIntervals.find(int => int.label === label);
+                        if (current >= selectedTopInt.start && current < selectedTopInt.end) {
+                            hitInterval = label;
+                            break;
+                        }
+                        
+                        if (Math.abs(current - selectedTopInt.end) < 1e-10 && 
+                            Math.abs(selectedTopInt.end - 1.0) < 1e-10) {
+                            hitInterval = label;
+                            break;
+                        }
                     }
-                    
-                    if (Math.abs(current - selectedTopInt.end) < 1e-10 && 
-                        Math.abs(selectedTopInt.end - 1.0) < 1e-10) {
-                        hitSelected = true;
-                        break;
-                    }
+
+                    if (hitInterval) break;
                 }
 
-                displayResults(iterates, topIntervals, bottomIntervals, hitSelected);
+                displayResults(iterates, topIntervals, bottomIntervals, hitInterval);
 
             } catch (err) {
                 showError(err.message);
             }
         }
 
-        function displayResults(iterates, topIntervals, bottomIntervals, hitSelected) {
+        function displayResults(iterates, topIntervals, bottomIntervals, hitInterval) {
             const container = document.getElementById('results-container');
             
             let html = '<div class="card"><h2>Results</h2>';
             
-            if (hitSelected) {
+            if (hitInterval) {
                 html += `
                     <div class="success">
-                        <p class="success-title">✓ Hit selected interval ${selectedInterval}!</p>
+                        <p class="success-title">✓ Hit selected interval ${hitInterval}!</p>
                         <p class="success-subtitle">Stopped after ${iterates.length - 1} iterate(s)</p>
                     </div>
                 `;
@@ -464,7 +506,7 @@
             
             html += '<div class="info-box"><h3>Top Intervals:</h3><div class="mono">';
             for (const int of topIntervals) {
-                const isSelected = int.label === selectedInterval;
+                const isSelected = selectedIntervals.has(int.label);
                 html += `<div ${isSelected ? 'class="highlighted"' : ''}>
                     ${int.label}: [${int.start.toFixed(6)}, ${int.end.toFixed(6)})
                     ${isSelected ? ' ← Selected' : ''}
@@ -492,7 +534,7 @@
         // Initialize
         renderIntervals();
         renderPermutation();
-        renderSelectedInterval();
+        renderSelectedIntervals();
     </script>
 </body>
 </html>
