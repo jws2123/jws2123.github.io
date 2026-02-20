@@ -68,15 +68,17 @@ td, th {
 }
 
 a:link {
-	background-color: black;
-	color: whitesmoke;
-	text-decoration: none;
+	background-color: white;
+	color: black;
+	text-decoration: underline;
+	text-decoration-style: dotted;
 }
 
 a:visited {
-	background-color: black;
-	color: whitesmoke;
-	text-decoration: none;
+	background-color: white;
+	color: black;
+	text-decoration: underline;
+	text-decoration-style: dotted;
 }
 
 a:hover {
@@ -128,7 +130,7 @@ a:hover {
 	width: 25%;
 	overflow: scroll;
 	padding: 3%;
-	background-color: whitesmoke;
+	background-color: white;
 }
 
 .content2 {
@@ -136,7 +138,7 @@ a:hover {
 	width: 75%;
 	overflow: scroll;
 	padding: 3%;
-	background-color: whitesmoke;
+	background-color: white;
 }
 
 .license {
