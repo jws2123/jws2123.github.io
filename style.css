@@ -97,7 +97,7 @@ a:hover {
 	background-image: url("chalkboard1.JPG");
 	background-size: cover;
 	height: 100%;
-	width: 50%;
+	width: 25%;
 	margin: auto;
 	text-align: center;
 }
@@ -108,7 +108,7 @@ a:hover {
 	background-image: url("m324/vector.jpg");
 	background-size: cover;
 	height: 100%;
-	width: 50%;
+	width: 25%;
 	margin: auto;
 	text-align: center;
 }
@@ -125,7 +125,7 @@ a:hover {
 
 .content {
 	height: 100%;
-	width: 50%;
+	width: 25%;
 	overflow: scroll;
 	padding: 3%;
 	background-color: whitesmoke;
