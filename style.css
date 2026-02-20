@@ -100,7 +100,9 @@ a:hover {
 
 .pic {
 	display: flex;
-	background-image: url("chalkboard1.JPG");
+	/*background-image: url("chalkboard1.JPG");*/
+	background-color: #ffe7e7;
+	animation: mymove 5s infinite;
 	background-size: cover;
 	height: 100%;
 	width: 25%;
@@ -212,4 +214,11 @@ li {
 	padding-left: 5%;
 }
 
+@keyframes colorshift {
+  0% {background-color: #ffe7e7;}
+  25% {background-color: #eaffe7;}
+  50% {background-color: #e7f8ff;}
+  75% {background-color: #f9e7ff;}
+  100% {background-color: #ffe7e7;}
+}
 
