@@ -102,7 +102,7 @@ a:hover {
 	display: flex;
 	/*background-image: url("chalkboard1.JPG");*/
 	background-color: #ffe7e7;
-	animation: mymove 5s infinite;
+	animation: colorshift 5s infinite;
 	background-size: cover;
 	height: 100%;
 	width: 25%;
