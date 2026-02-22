@@ -9,11 +9,13 @@ html, body{
 
 h1 {
 	font-family: Montserrat, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+	font-weight: 400;
 	font-size: 32px;
 }
 
 h2 {
 	font-family: Montserrat, "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+	font-weight: 400;
 	font-size: 24px;
 }
 
@@ -29,12 +31,14 @@ p {
 
 h4 {
 	font-family: 'Titillium Web', sans-serif;
+	font-weight: 200;
 	font-size: 18px;
 }
 
 p {
 	font-family: 'Titillium Web', sans-serif;
-	font-size: 12px;
+	font-weight: 200;
+	font-size: 16px;
 }
 
 /*h4 {
@@ -68,15 +72,17 @@ td, th {
 }
 
 a:link {
-	background-color: black;
-	color: whitesmoke;
-	text-decoration: none;
+	background-color: white;
+	color: black;
+	text-decoration: underline;
+	text-decoration-style: dotted;
 }
 
 a:visited {
-	background-color: black;
-	color: whitesmoke;
-	text-decoration: none;
+	background-color: white;
+	color: black;
+	text-decoration: underline;
+	text-decoration-style: dotted;
 }
 
 a:hover {
@@ -111,10 +117,12 @@ a.nav:hover {
 
 .pic {
 	display: flex;
-	background-image: url("chalkboard1.JPG");
+	/*background-image: url("chalkboard1.JPG");*/
+	background-color: #ffe7e7;
+	animation: colorshift 5s infinite;
 	background-size: cover;
 	height: 100%;
-	width: 50%;
+	width: 25%;
 	margin: auto;
 	text-align: center;
 }
@@ -125,7 +133,17 @@ a.nav:hover {
 	background-image: url("m324/vector.jpg");
 	background-size: cover;
 	height: 100%;
-	width: 50%;
+	width: 25%;
+	margin: auto;
+	text-align: center;
+}
+
+.picsmall {
+	display: flex;
+	background-image: url("m324/vector.jpg");
+	background-size: cover;
+	height: 100%;
+	width: 25%;
 	margin: auto;
 	text-align: center;
 }
@@ -141,10 +159,18 @@ a.nav:hover {
 
 .content {
 	height: 100%;
-	width: 80%;
+	width: 75%;
 	overflow: scroll;
 	padding: 3%;
-	background-color: whitesmoke;
+	background-color: white;
+}
+
+.content2 {
+	height: 100%;
+	width: 75%;
+	overflow: scroll;
+	padding: 3%;
+	background-color: white;
 }
 
 .license {
@@ -182,7 +208,6 @@ a.nav:hover {
 
 ul {
 	font-size: 12px;
-	font-color: whitesmoke;
 }
 
 /*li {
@@ -192,13 +217,18 @@ ul {
 
 li {
 	font-family: 'Titillium Web', sans-serif;
+	font-size: 14px;
+	font-weight: 100;
 	margin: 4px;
-	font-color: whitesmoke;
 }
 
 /*li {
 	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 	margin: 4px;
+}
+
+.circle{
+	list-style-type: circle;
 }*/
 
 .l{
