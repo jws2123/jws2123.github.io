@@ -92,20 +92,21 @@ a:hover {
 }
 
 a.nav:link {
-	background-color: whitesmoke;
-	color: #505050;
-	text-decoration: none;
+	background-color: rgba(0,0,0,0.0);
+	color: #6f6e6e;
+	text-decoration: underline;
+	text-decoration-style: dotted;
 }
 
 a.nav:visited {
-	background-color: whitesmoke;
-	color: #505050;
-	text-decoration: none;
+	background-color: rgba(0,0,0,0.0);
+	color: #6f6e6e;
+	text-decoration: underline;
+	text-decoration-style: dotted;
 }
 
 a.nav:hover {
-	background-color: #505050;
-	color: whitesmoke;
+	color: #6f6e6e;
 	text-decoration: none;
 }
 
@@ -153,8 +154,9 @@ a.nav:hover {
 	width: 20%;
 	overflow: scroll;
 	padding: 3%;
-	background-color: #505050;
-	font-color: whitesmoke;
+	background-color: #ffe7e7;
+	animation: colorshift 5s infinite;
+	background-size: cover;
 }
 
 .content {
@@ -233,7 +235,7 @@ li {
 
 .l{
 	list-style-type: circle;
-	color: whitesmoke;
+	color: #6f6e6e;
 }
 
 #pad {
