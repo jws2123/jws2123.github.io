@@ -208,15 +208,22 @@ li {
 
 #pad {
 	padding: 5%;
-	color: whitesmoke;
+	color: #6f6e6e;
 }
 
 
 #pad-top {
-	color: whitesmoke;
-	padding-top: 50%;
+	color: #6f6e6e;
+	padding-top: 20%;
 	padding-right: 5%;
 	padding-left: 5%;
 }
 
+@keyframes colorshift {
+  0% {background-color: #ffe7e7;}
+  25% {background-color: #eaffe7;}
+  50% {background-color: #e7f8ff;}
+  75% {background-color: #f9e7ff;}
+  100% {background-color: #ffe7e7;}
+}
 
