@@ -90,6 +90,24 @@ a:hover {
 	text-decoration: none;
 }
 
+a.nav:link {
+	background-color: rgba(0,0,0,0.0);
+	color: #6f6e6e;
+	text-decoration: underline;
+	text-decoration-style: dotted;
+}
+
+a.nav:visited {
+	background-color: rgba(0,0,0,0.0);
+	color: #6f6e6e;
+	text-decoration: underline;
+	text-decoration-style: dotted;
+}
+
+a.nav:hover {
+	color: #6f6e6e;
+	text-decoration: none;
+}
 
 .container {
 	display: flex;
@@ -130,6 +148,16 @@ a:hover {
 	text-align: center;
 }
 
+.links {
+	height: 100%;
+	width: 20%;
+	overflow: scroll;
+	padding: 3%;
+	background-color: #ffe7e7;
+	animation: colorshift 5s infinite;
+	background-size: cover;
+}
+
 .content {
 	height: 100%;
 	width: 75%;
@@ -153,6 +181,10 @@ a:hover {
 }
 
 .content::-webkit-scrollbar {
+	display: none;
+}
+
+.links::-webkit-scrollbar {
 	display: none;
 }
 
@@ -199,6 +231,11 @@ li {
 .circle{
 	list-style-type: circle;
 }*/
+
+.l{
+	list-style-type: circle;
+	color: #6f6e6e;
+}
 
 #pad {
 	padding: 5%;
