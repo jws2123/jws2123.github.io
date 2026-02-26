@@ -237,6 +237,35 @@ li {
 	color: #6f6e6e;
 }
 
+/* The following was added for collapsible sections */
+.collapsible {
+  background-color: white;
+  color: black;
+  text-decoration: dotted;
+  /*cursor: pointer;*/
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 14px;
+}
+
+.active, .collapsible:hover {
+	color: #6f6e6e;
+	text-decoration: none;
+}
+
+.collapsible_content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: white;
+}
+
+/* padding for left margin text */
+
 #pad {
 	padding: 5%;
 	color: #6f6e6e;
