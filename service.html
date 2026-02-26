@@ -23,6 +23,22 @@
 
   		gtag('config', 'G-FRKJNDLL07');
 	</script>
+	<script>
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+  		coll[i].addEventListener("click", function() {
+    		this.classList.toggle("active");
+    		var content = this.nextElementSibling;
+    		if (collapsible_content.style.maxHeight){
+      		collapsible_content.style.maxHeight = null;
+    		} else {
+      		collapsible_content.style.maxHeight = collapsible_content.scrollHeight + "px";
+   			} 
+  		});
+	}
+	</script>
 </head>
 <div class="container".
 <body>
@@ -63,7 +79,7 @@
 		</h2>
 		<p>
 			<ul class="circle">
-				<li>Director of <a href="./MathCircle.pdf">Math Circles in Rural Indiana</a>, Spring 2025 at Bedford North Laawrence High School in Bedford, Indiana with the gracious support of the Indiana University Department of Mathematics</li>
+				<li>Director of <a href="./MathCircle.pdf">Math Circles in Rural Indiana</a>, Spring 2025 at Bedford North Lawrence High School in Bedford, Indiana with the gracious support of the Indiana University Department of Mathematics</li>
         		<li>Co-Organizer of the <a href="https://sites.uw.edu/wdrp" target="blank">Washington Directed Reading Program</a>, 2019 - 2022</li>
 			</ul>
 		</p>
@@ -73,7 +89,10 @@
 		</h2>
 		<p>
 			<ul class="circle">
-				<li>Organizer, Workshop: <it>The Veech group realization problem,</it> June 15-19 2026, generously funded by the Heilbronn Institute for Mathematical Research, <a>attendees and more</a></li>
+				<li>Organizer, Workshop: <it>The Veech group realization problem,</it> June 15-19 2026, generously funded by the Heilbronn Institute for Mathematical Research,<button class="collapsible">Attendees and more</button></li>
+					<div class="collapsible_content">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+					</div>
 				<li>Co-Organizer of the Bloomington Geometry Workshop <a href="https://bgw.sitehost.iu.edu/2024/" target="blank">2024</a> and <a href="https://bgw.sitehost.iu.edu/2025/" target="blank">2025</a></li>
         		<li>Co-Organizer of the <a href="https://math.indiana.edu/seminars/index.html" target="blank">Geometry Seminar</a> at Indiana University</li>
 			</ul>
