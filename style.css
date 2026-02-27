@@ -271,7 +271,7 @@ p#collapsible {
 .collapsible_content {
 	padding: 0 12px;
 	max-height: 0;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	transition: max-height 0.2s ease-out;
 	background-color: white;
 	font-family: 'Titillium Web', sans-serif;
