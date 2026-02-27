@@ -75,7 +75,7 @@
 			<ul class="circle">
 				<li>Organizer, Workshop: <it>The Veech group realization problem,</it> June 15-19 2026, generously funded by the Heilbronn Institute for Mathematical Research,
 					<button class="collapsible">Attendees and more</button>
-					<div class="content">
+					<div class="collapsible_content">
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 					</div>
 				</li>
@@ -126,11 +126,11 @@
 	for (i = 0; i < coll.length; i++) {
   		coll[i].addEventListener("click", function() {
     		this.classList.toggle("active");
-    		var content = this.nextElementSibling;
-    		if (content.style.maxHeight){
-      		content.style.maxHeight = null;
+    		var collapsible_content = this.nextElementSibling;
+    		if (collapsible_content.style.maxHeight){
+      		collapsible_content.style.maxHeight = null;
     		} else {
-      		content.style.maxHeight = content.scrollHeight + "px";
+      		collapsible_content.style.maxHeight = content.scrollHeight + "px";
    			} 
   		});
 	}
