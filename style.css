@@ -223,6 +223,13 @@ li {
 	margin: 4px;
 }
 
+/* To control font size in collapsible text on Service page
+p#collapsible {
+	font-family: 'Titillium Web', sans-serif;
+	font-weight: 100;
+	font-size: 12px;	
+}
+
 /*li {
 	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 	margin: 4px;
@@ -239,16 +246,21 @@ li {
 
 /* The following was added for collapsible sections */
 .collapsible {
-  background-color: white;
-  color: black;
-  text-decoration: dotted;
-  /*cursor: pointer;*/
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 14px;
+	background-color: white;
+	color: black;
+	text-decoration: dotted;
+	/*cursor: pointer;*/
+	/*padding: 18px;*/
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 14px;
+	font-weight: 100;
+	margin: 4px;
+	text-decoration: underline;
+	text-decoration-style: dotted;
 }
 
 .active, .collapsible:hover {
@@ -257,11 +269,15 @@ li {
 }
 
 .collapsible_content {
-  padding: 0 18px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-  background-color: white;
+	padding: 0 12px;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	background-color: white;
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 14px;
+	font-weight: 100;
+	margin: 4px;
 }
 
 /* padding for left margin text */
