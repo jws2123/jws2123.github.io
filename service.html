@@ -23,6 +23,15 @@
 
   		gtag('config', 'G-FRKJNDLL07');
 	</script>
+  <script type="text/javascript" charset="utf-8">
+  function showHide(elementid){
+    if (document.getElementById(elementid).style.display == 'none'){
+      document.getElementById(elementid).style.display = '';
+    } else {
+      document.getElementById(elementid).style.display = 'none';
+    }
+  }
+  </script>
 </head>
 <div class="container".
 <body>
@@ -73,9 +82,8 @@
 		</h2>
 		<p>
 			<ul class="circle">
-				<li>Organizer, Workshop: <i>The Veech group realization problem,</i> June 15-19 2026, generously funded by the Heilbronn Institute for Mathematical Research,
-					<button class="collapsible">Attendees and more</button>
-					<div class="collapsible_content">
+				<li>Organizer, Workshop: <i>The Veech group realization problem,</i> June 15-19 2026, generously funded by the Heilbronn Institute for Mathematical Research,<a href="javascript:showHide('workshopDetails')">Participants and more</a>
+					<div id="workshopDetails" class="collapsible_content" style="display: none;">
 						<p id="collapsible">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 					</div>
 				</li>
@@ -119,22 +127,6 @@
 		</div>
 	</div>
 
-	<script>
-	var coll = document.getElementsByClassName("collapsible");
-	var i;
-
-	for (i = 0; i < coll.length; i++) {
-  		coll[i].addEventListener("click", function() {
-    		this.classList.toggle("active");
-    		var collapsible_content = this.nextElementSibling;
-    		if (collapsible_content.style.maxHeight){
-      		collapsible_content.style.maxHeight = null;
-    		} else {
-      		collapsible_content.style.maxHeight = collapsible_content.scrollHeight + "px";
-   			} 
-  		});
-	}
-	</script>
 	
 </body>
 </div>
