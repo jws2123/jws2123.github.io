@@ -231,6 +231,13 @@ p#collapsible {
 	color:#2e738f;
 }
 
+p#collapsible-bold {
+	font-family: 'Titillium Web', sans-serif;
+	font-weight: 400;
+	font-size: 12px;
+	color:#2e738f;
+}
+
 /* To control font for journals on publications page */
 p#journal {
 	font-size: 14px;
