@@ -295,6 +295,18 @@ p#collapsible {
 	padding-left: 5%;
 }
 
+#journal {
+	font-size: 14px;
+	color:#2e738f;
+	left-padding: 5%;
+}
+
+#links {
+	font-size: 12px;
+	color:#2e738f;
+	left-padding: 5%;
+}
+
 @keyframes colorshift {
   0% {background-color: #ffe7e7;}
   25% {background-color: #eaffe7;}
