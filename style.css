@@ -223,12 +223,28 @@ li {
 	margin: 4px;
 }
 
-/* To control font size in collapsible text on Service page */
+/* To control font size in collapsible text on Publications and Service page */
 p#collapsible {
 	font-family: 'Titillium Web', sans-serif;
 	font-weight: 100;
-	font-size: 12px;	
+	font-size: 12px;
+	color:#2e738f;
 }
+
+/* To control font for journals on publications page */
+p#journal {
+	font-size: 14px;
+	color:#2e738f;
+	left-padding: 5%;
+}
+
+/* To control font links on publications page */
+p#links {
+	font-size: 12px;
+	color:#2e738f;
+	left-padding: 5%;
+}
+
 
 /*li {
 	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
@@ -293,18 +309,6 @@ p#collapsible {
 	padding-top: 20%;
 	padding-right: 5%;
 	padding-left: 5%;
-}
-
-#journal {
-	font-size: 14px;
-	color:#2e738f;
-	left-padding: 5%;
-}
-
-#links {
-	font-size: 12px;
-	color:#2e738f;
-	left-padding: 5%;
 }
 
 @keyframes colorshift {
