@@ -183,4 +183,111 @@ function generatePoints(T){
             Number.isFinite(n)
         ){
             points.push({
-     
+                a,b,s,
+                theta,
+                alpha,
+                n
+            });
+        }
+    }
+
+    return points;
+}
+
+function drawScatter(svgId,data,xkey,ykey,color){
+
+    const svg = document.getElementById(svgId);
+
+    while(svg.firstChild)
+        svg.removeChild(svg.firstChild);
+
+    if(data.length===0) return;
+
+    const xs = data.map(p=>p[xkey]);
+    const ys = data.map(p=>p[ykey]);
+
+    const xmin = Math.min(...xs);
+    const xmax = Math.max(...xs);
+
+    const ymin = Math.min(...ys);
+    const ymax = Math.max(...ys);
+
+    data.forEach(p=>{
+
+        const x =
+            20 +
+            380*(p[xkey]-xmin)/
+            ((xmax-xmin)||1);
+
+        const y =
+            300 -
+            280*(p[ykey]-ymin)/
+            ((ymax-ymin)||1);
+
+        const c =
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "circle"
+            );
+
+        c.setAttribute("cx",x);
+        c.setAttribute("cy",y);
+        c.setAttribute("r",2);
+        c.setAttribute("fill",color);
+        c.setAttribute("opacity",0.6);
+
+        svg.appendChild(c);
+    });
+
+    const frame =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "rect"
+        );
+
+    frame.setAttribute("x",20);
+    frame.setAttribute("y",20);
+    frame.setAttribute("width",380);
+    frame.setAttribute("height",280);
+    frame.setAttribute("fill","none");
+    frame.setAttribute("stroke","#777");
+
+    svg.appendChild(frame);
+}
+
+function update(){
+
+    const T = Number(slider.value);
+
+    Tvalue.textContent =
+        T.toLocaleString();
+
+    const points =
+        generatePoints(T);
+
+    document.getElementById("count")
+        .textContent = points.length;
+
+    drawScatter(
+        "abPlot",
+        points,
+        "a",
+        "b",
+        "#2563eb"
+    );
+
+    drawScatter(
+        "anPlot",
+        points,
+        "alpha",
+        "n",
+        "#dc2626"
+    );
+}
+
+update();
+
+</script>
+
+</body>
+</html>
