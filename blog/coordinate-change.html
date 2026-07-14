@@ -1,162 +1,186 @@
-import React, { useMemo, useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coordinate Change Visualization</title>
 
-function project3D(x, y, z, scale = 1) {
-  const az = 0.8;
-  const el = 0.5;
-
-  const xr = Math.cos(az) * x - Math.sin(az) * y;
-  const yr = Math.sin(az) * x + Math.cos(az) * y;
-
-  const yy = Math.cos(el) * yr - Math.sin(el) * z;
-
-  return {
-    x: scale * xr,
-    y: scale * yy,
-  };
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f5f5f5;
 }
 
-function sampleRegion(T, N) {
-  const pts = [];
-
-  const bMax = (T - Math.sqrt(T * (T - 4))) / (2 * T);
-
-  while (pts.length < N) {
-    const b = Math.random() * (bMax - 1 / T) + 1 / T;
-
-    const amin = 1 / (b * T);
-    const amax = 1 - b;
-
-    if (amin >= amax) continue;
-
-    const a = amin + Math.random() * (amax - amin);
-
-    const smax = 1 / (a * b);
-    if (smax <= T) continue;
-
-    const s = T + Math.random() * (smax - T);
-
-    const theta = Math.acos(1 / Math.sqrt(1 + s * s));
-    const alpha = a * Math.sqrt(1 + s * s);
-    const n =
-      (a * b + s * s * a * b - s) /
-      (a * a + s * s * a * a);
-
-    pts.push({
-      source: { a, b, s },
-      target: { theta, alpha, n },
-    });
-  }
-
-  return pts;
+.container {
+    max-width: 1400px;
+    margin: auto;
 }
 
-function ScatterPanel({ data, keys, title, color }) {
-  const vals = data.map((d) => ({
-    x: d[keys[0]],
-    y: d[keys[1]],
-    z: d[keys[2]],
-  }));
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
 
-  const xs = vals.map((v) => v.x);
-  const ys = vals.map((v) => v.y);
-  const zs = vals.map((v) => v.z);
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
 
-  const xmin = Math.min(...xs);
-  const xmax = Math.max(...xs);
+svg {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #ddd;
+    background: white;
+}
 
-  const ymin = Math.min(...ys);
-  const ymax = Math.max(...ys);
+h1 {
+    margin-top: 0;
+}
 
-  const zmin = Math.min(...zs);
-  const zmax = Math.max(...zs);
+.info {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
 
-  const projected = vals.map((v) => {
-    const x = (v.x - xmin) / (xmax - xmin + 1e-12) - 0.5;
-    const y = (v.y - ymin) / (ymax - ymin + 1e-12) - 0.5;
-    const z = (v.z - zmin) / (zmax - zmin + 1e-12) - 0.5;
+.info div {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+</style>
+</head>
 
-    return project3D(x, y, z, 260);
-  });
+<body>
 
-  return (
-    <div className="flex flex-col items-center">
-      <h3 className="font-semibold mb-2">{title}</h3>
+<div class="container">
 
-      <svg width={420} height={420} className="border rounded">
-        {projected.map((p, i) => (
-          <circle
-            key={i}
-            cx={210 + p.x}
-            cy={210 - p.y}
-            r={2}
-            fill={color}
-            opacity={0.65}
-          />
-        ))}
-      </svg>
+    <h1>Coordinate Change Visualization</h1>
 
-      <div className="text-sm mt-2">
-        ({keys.join(", ")})
-      </div>
+    <p>
+        Mapping
+        (a,b,s) → (θ, α, n)
+    </p>
+
+    <p>
+        θ = arccos(1 / √(1+s²))<br>
+        α = a√(1+s²)<br>
+        n = (ab + s²ab − s)/(a² + s²a²)
+    </p>
+
+    <div class="card">
+        <label>
+            <strong>T = <span id="Tvalue">1000</span></strong>
+        </label>
+        <br><br>
+        <input
+            id="Tslider"
+            type="range"
+            min="100"
+            max="100000"
+            step="100"
+            value="1000"
+            style="width:100%;"
+        >
     </div>
-  );
-}
 
-export default function CoordinateChangeVisualization() {
-  const [logT, setLogT] = useState(Math.log10(1000));
+    <br>
 
-  const T = Math.round(10 ** logT);
+    <div class="grid">
 
-  const samples = useMemo(() => sampleRegion(T, 2500), [T]);
-
-  const source = samples.map((p) => p.source);
-  const target = samples.map((p) => p.target);
-
-  return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">
-        Coordinate Change Visualization
-      </h1>
-
-      <div>
-        <div className="mb-2">
-          T = {T.toLocaleString()}
+        <div class="card">
+            <h3>Original Region Projection (a,b)</h3>
+            <svg id="abPlot" viewBox="0 0 420 320"></svg>
         </div>
 
-        <input
-          type="range"
-          min={2}
-          max={5}
-          step={0.01}
-          value={logT}
-          onChange={(e) => setLogT(Number(e.target.value))}
-          className="w-full"
-        />
-      </div>
+        <div class="card">
+            <h3>Transformed Projection (α,n)</h3>
+            <svg id="anPlot" viewBox="0 0 420 320"></svg>
+        </div>
 
-      <div className="text-sm text-gray-600">
-        Region:
-        {" "}
-        a ∈ [1/(bT), 1−b],
-        {" "}
-        s ∈ [T, 1/(ab))
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <ScatterPanel
-          data={source}
-          keys={["a", "b", "s"]}
-          title="Source Space"
-          color="#2563eb"
-        />
-
-        <ScatterPanel
-          data={target}
-          keys={["theta", "alpha", "n"]}
-          title="Transformed Space"
-          color="#dc2626"
-        />
-      </div>
     </div>
-  );
+
+    <div class="info">
+        <div>
+            Sampled points:
+            <span id="count"></span>
+        </div>
+
+        <div>
+            θ approaches π/2 as s increases.
+        </div>
+
+        <div>
+            Move the slider to vary T.
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+const slider = document.getElementById("Tslider");
+const Tvalue = document.getElementById("Tvalue");
+
+slider.addEventListener("input", update);
+
+function randomBetween(a,b){
+    return a + Math.random()*(b-a);
 }
+
+function generatePoints(T){
+
+    const points = [];
+    const N = 5000;
+
+    for(let i=0;i<N;i++){
+
+        const b = 0.001 + 0.999*Math.random();
+
+        const boundary1 = 1 - b;
+        const boundary2 = 1/(b*T);
+
+        const amin = Math.max(
+            Math.min(boundary1,boundary2),
+            1e-6
+        );
+
+        const amax = Math.max(
+            boundary1,
+            boundary2
+        );
+
+        if(amax <= amin) continue;
+
+        const a = randomBetween(amin,amax);
+
+        const sMax = 1/(a*b);
+
+        if(sMax <= T) continue;
+
+        const s = randomBetween(T,sMax);
+
+        const theta =
+            Math.acos(1/Math.sqrt(1+s*s));
+
+        const alpha =
+            a*Math.sqrt(1+s*s);
+
+        const n =
+            (a*b + s*s*a*b - s) /
+            (a*a + s*s*a*a);
+
+        if(
+            Number.isFinite(theta) &&
+            Number.isFinite(alpha) &&
+            Number.isFinite(n)
+        ){
+            points.push({
+     
