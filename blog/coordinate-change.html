@@ -1,148 +1,162 @@
-
 import React, { useMemo, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Slider } from "@/components/ui/slider";
-import { Button } from "@/components/ui/button";
-import { RotateCcw, Info } from "lucide-react";
-import { motion } from "framer-motion";
 
-const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
+function project3D(x, y, z, scale = 1) {
+  const az = 0.8;
+  const el = 0.5;
 
-function project3D(p, yaw, pitch, width, height, pad = 35) {
-  const cy = Math.cos(yaw), sy = Math.sin(yaw);
-  const cp = Math.cos(pitch), sp = Math.sin(pitch);
-  const x1 = cy * p.x - sy * p.z;
-  const z1 = sy * p.x + cy * p.z;
-  const y1 = cp * p.y - sp * z1;
-  const z2 = sp * p.y + cp * z1;
-  const persp = 1 / (1 + 0.22 * z2);
+  const xr = Math.cos(az) * x - Math.sin(az) * y;
+  const yr = Math.sin(az) * x + Math.cos(az) * y;
+
+  const yy = Math.cos(el) * yr - Math.sin(el) * z;
+
   return {
-    x: width / 2 + x1 * (width / 2 - pad) * persp,
-    y: height / 2 - y1 * (height / 2 - pad) * persp,
-    z: z2,
+    x: scale * xr,
+    y: scale * yy,
   };
 }
 
-function PointCloud({ points, xKey, yKey, zKey, labels, colorMode = "s", height = 440 }) {
-  const [yaw, setYaw] = useState(-0.75);
-  const [pitch, setPitch] = useState(0.48);
-  const [drag, setDrag] = useState(null);
-  const width = 760;
+function sampleRegion(T, N) {
+  const pts = [];
 
-  const normalized = useMemo(() => {
-    if (!points.length) return [];
-    const keys = [xKey, yKey, zKey];
-    const ext = Object.fromEntries(keys.map(k => [k, [Math.min(...points.map(p => p[k])), Math.max(...points.map(p => p[k]))]]));
-    return points.map(p => {
-      const q = {};
-      keys.forEach(k => {
-        const [mn, mx] = ext[k];
-        q[k] = mx === mn ? 0 : 2 * (p[k] - mn) / (mx - mn) - 1;
-      });
-      return { ...p, px: q[xKey], py: q[yKey], pz: q[zKey] };
+  const bMax = (T - Math.sqrt(T * (T - 4))) / (2 * T);
+
+  while (pts.length < N) {
+    const b = Math.random() * (bMax - 1 / T) + 1 / T;
+
+    const amin = 1 / (b * T);
+    const amax = 1 - b;
+
+    if (amin >= amax) continue;
+
+    const a = amin + Math.random() * (amax - amin);
+
+    const smax = 1 / (a * b);
+    if (smax <= T) continue;
+
+    const s = T + Math.random() * (smax - T);
+
+    const theta = Math.acos(1 / Math.sqrt(1 + s * s));
+    const alpha = a * Math.sqrt(1 + s * s);
+    const n =
+      (a * b + s * s * a * b - s) /
+      (a * a + s * s * a * a);
+
+    pts.push({
+      source: { a, b, s },
+      target: { theta, alpha, n },
     });
-  }, [points, xKey, yKey, zKey]);
+  }
 
-  const screen = normalized.map((p, i) => ({ ...p, ...project3D({ x: p.px, y: p.py, z: p.pz }, yaw, pitch, width, height), i })).sort((a,b)=>a.z-b.z);
-  const axisPts = [
-    [{x:-1,y:-1,z:-1},{x:1,y:-1,z:-1},labels[0]],
-    [{x:-1,y:-1,z:-1},{x:-1,y:1,z:-1},labels[1]],
-    [{x:-1,y:-1,z:-1},{x:-1,y:-1,z:1},labels[2]],
-  ].map(([a,b,l]) => [project3D(a,yaw,pitch,width,height),project3D(b,yaw,pitch,width,height),l]);
-
-  const cval = p => colorMode === "s" ? p.tau : p.alphaNorm;
-  const color = p => {
-    const u = clamp(cval(p),0,1);
-    const h = 255 - 210*u;
-    return `hsl(${h} 78% ${48 + 8*(1-u)}%)`;
-  };
-
-  return <div className="relative w-full overflow-hidden rounded-2xl bg-slate-950 shadow-inner">
-    <svg viewBox={`0 0 ${width} ${height}`} className="h-auto w-full select-none touch-none"
-      onPointerDown={e=>{e.currentTarget.setPointerCapture(e.pointerId);setDrag({x:e.clientX,y:e.clientY,yaw,pitch})}}
-      onPointerMove={e=>drag&&((setYaw(drag.yaw+(e.clientX-drag.x)*0.009)),setPitch(clamp(drag.pitch+(e.clientY-drag.y)*0.009,-1.35,1.35)))}
-      onPointerUp={()=>setDrag(null)} onPointerCancel={()=>setDrag(null)}>
-      <rect width={width} height={height} fill="#020617" />
-      {axisPts.map(([a,b,l],i)=><g key={i}><line x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="#64748b" strokeWidth="1.5"/><text x={b.x+7} y={b.y-7} fill="#cbd5e1" fontSize="15">{l}</text></g>)}
-      {screen.map(p=><circle key={p.i} cx={p.x} cy={p.y} r={2.1} fill={color(p)} opacity={0.68} />)}
-      <text x="18" y="28" fill="#94a3b8" fontSize="13">Drag to rotate • axes independently rescaled</text>
-    </svg>
-    <button className="absolute right-3 top-3 rounded-xl bg-white/10 p-2 text-white hover:bg-white/20" onClick={()=>{setYaw(-0.75);setPitch(0.48)}} aria-label="Reset view"><RotateCcw size={17}/></button>
-  </div>
+  return pts;
 }
 
-export default function CoordinateChangeVisualizer() {
-  const [logT, setLogT] = useState(2);
-  const [density, setDensity] = useState(16);
-  const [colorMode, setColorMode] = useState("s");
+function ScatterPanel({ data, keys, title, color }) {
+  const vals = data.map((d) => ({
+    x: d[keys[0]],
+    y: d[keys[1]],
+    z: d[keys[2]],
+  }));
+
+  const xs = vals.map((v) => v.x);
+  const ys = vals.map((v) => v.y);
+  const zs = vals.map((v) => v.z);
+
+  const xmin = Math.min(...xs);
+  const xmax = Math.max(...xs);
+
+  const ymin = Math.min(...ys);
+  const ymax = Math.max(...ys);
+
+  const zmin = Math.min(...zs);
+  const zmax = Math.max(...zs);
+
+  const projected = vals.map((v) => {
+    const x = (v.x - xmin) / (xmax - xmin + 1e-12) - 0.5;
+    const y = (v.y - ymin) / (ymax - ymin + 1e-12) - 0.5;
+    const z = (v.z - zmin) / (zmax - zmin + 1e-12) - 0.5;
+
+    return project3D(x, y, z, 260);
+  });
+
+  return (
+    <div className="flex flex-col items-center">
+      <h3 className="font-semibold mb-2">{title}</h3>
+
+      <svg width={420} height={420} className="border rounded">
+        {projected.map((p, i) => (
+          <circle
+            key={i}
+            cx={210 + p.x}
+            cy={210 - p.y}
+            r={2}
+            fill={color}
+            opacity={0.65}
+          />
+        ))}
+      </svg>
+
+      <div className="text-sm mt-2">
+        ({keys.join(", ")})
+      </div>
+    </div>
+  );
+}
+
+export default function CoordinateChangeVisualization() {
+  const [logT, setLogT] = useState(Math.log10(1000));
+
   const T = Math.round(10 ** logT);
 
-  const result = useMemo(() => {
-    const D = Math.max(8, density);
-    const disc = Math.sqrt(Math.max(0, 1 - 4/T));
-    const bLo = (1-disc)/2, bHi = (1+disc)/2;
-    const pts = [];
-    for (let ib=0; ib<D; ib++) {
-      const u=(ib+0.5)/D;
-      const b=bLo+(bHi-bLo)*u;
-      const lower=1/(b*T), upper=1-b;
-      if (!(upper>lower && lower>0)) continue;
-      for (let ia=0; ia<D; ia++) {
-        const v=(ia+0.5)/D;
-        const a=lower+(upper-lower)*v;
-        const sMax=1/(a*b);
-        if (!(sMax>T)) continue;
-        for (let is=0; is<Math.max(5,Math.floor(D*0.62)); is++) {
-          const tau=(is+0.35)/Math.max(5,Math.floor(D*0.62));
-          const s=T*Math.pow(sMax/T,tau);
-          const theta=Math.acos(1/Math.sqrt(1+s*s));
-          const alpha=a*Math.sqrt(1+s*s);
-          const n=(a*b+s*s*a*b-s)/(a*a+s*s*a*a);
-          if ([theta,alpha,n].every(Number.isFinite)) pts.push({a,b,s,theta,alpha,n,tau,alphaNorm:v});
-        }
-      }
-    }
-    return {pts,bLo,bHi};
-  },[T,density]);
+  const samples = useMemo(() => sampleRegion(T, 2500), [T]);
 
-  const thetaRange = result.pts.length ? [Math.min(...result.pts.map(p=>p.theta)),Math.max(...result.pts.map(p=>p.theta))] : [0,0];
-  const nRange = result.pts.length ? [Math.min(...result.pts.map(p=>p.n)),Math.max(...result.pts.map(p=>p.n))] : [0,0];
-  const fmt = x => Math.abs(x)>=1e4 || (Math.abs(x)>0&&Math.abs(x)<1e-3) ? x.toExponential(3) : x.toPrecision(5);
+  const source = samples.map((p) => p.source);
+  const target = samples.map((p) => p.target);
 
-  return <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-indigo-50 p-4 text-slate-900 md:p-8">
-    <div className="mx-auto max-w-7xl space-y-6">
-      <motion.div initial={{opacity:0,y:-10}} animate={{opacity:1,y:0}} className="space-y-2">
-        <div className="inline-flex items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-800">R³ → R³ interactive map</div>
-        <h1 className="text-3xl font-bold tracking-tight md:text-5xl">Coordinate-change visualizer</h1>
-        <p className="max-w-4xl text-slate-600">Explore the source region in <b>(a,b,s)</b> and its image in <b>(θ,α,n)</b>. Points have matching colours in both panels.</p>
-      </motion.div>
+  return (
+    <div className="p-6 space-y-6">
+      <h1 className="text-2xl font-bold">
+        Coordinate Change Visualization
+      </h1>
 
-      <Card className="rounded-2xl border-0 shadow-lg"><CardContent className="grid gap-5 p-5 md:grid-cols-[1fr_auto_auto] md:items-end">
-        <div>
-          <div className="mb-2 flex justify-between"><label className="font-semibold">Parameter T</label><span className="rounded-lg bg-slate-100 px-3 py-1 font-mono">{T.toLocaleString()}</span></div>
-          <Slider min={2} max={5} step={0.01} value={[logT]} onValueChange={v=>setLogT(v[0])}/>
-          <div className="mt-1 flex justify-between text-xs text-slate-500"><span>100</span><span>logarithmic scale</span><span>100,000</span></div>
+      <div>
+        <div className="mb-2">
+          T = {T.toLocaleString()}
         </div>
-        <div><label className="mb-2 block text-sm font-semibold">Sampling density</label><Slider className="w-40" min={8} max={25} step={1} value={[density]} onValueChange={v=>setDensity(v[0])}/><div className="mt-1 text-xs text-slate-500">{result.pts.length.toLocaleString()} points</div></div>
-        <Button variant="outline" className="rounded-xl" onClick={()=>setColorMode(colorMode==="s"?"a":"s")}>Colour: {colorMode==="s"?"relative s":"relative a"}</Button>
-      </CardContent></Card>
 
-      <div className="grid gap-6 xl:grid-cols-2">
-        <Card className="overflow-hidden rounded-2xl border-0 shadow-lg"><CardContent className="space-y-3 p-4"><div><h2 className="text-xl font-bold">Source region</h2><p className="text-sm text-slate-500">(a,b,s), with logarithmic sampling along s</p></div><PointCloud points={result.pts} xKey="a" yKey="b" zKey="s" labels={["a","b","s"]} colorMode={colorMode}/></CardContent></Card>
-        <Card className="overflow-hidden rounded-2xl border-0 shadow-lg"><CardContent className="space-y-3 p-4"><div><h2 className="text-xl font-bold">Transformed image</h2><p className="text-sm text-slate-500">(θ,α,n), generated point-for-point</p></div><PointCloud points={result.pts} xKey="theta" yKey="alpha" zKey="n" labels={["θ","α","n"]} colorMode={colorMode}/></CardContent></Card>
+        <input
+          type="range"
+          min={2}
+          max={5}
+          step={0.01}
+          value={logT}
+          onChange={(e) => setLogT(Number(e.target.value))}
+          className="w-full"
+        />
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        {[['Admissible b',`(${fmt(result.bLo)}, ${fmt(result.bHi)})`],['θ range',`${fmt(thetaRange[0])} to ${fmt(thetaRange[1])} rad`],['n range',`${fmt(nRange[0])} to ${fmt(nRange[1])}`]].map(([k,v])=><Card key={k} className="rounded-2xl border-0 shadow"><CardContent className="p-5"><div className="text-sm text-slate-500">{k}</div><div className="mt-1 break-all font-mono text-lg font-semibold">{v}</div></CardContent></Card>)}
+      <div className="text-sm text-gray-600">
+        Region:
+        {" "}
+        a ∈ [1/(bT), 1−b],
+        {" "}
+        s ∈ [T, 1/(ab))
       </div>
 
-      <Card className="rounded-2xl border-indigo-100 bg-white/80"><CardContent className="p-5">
-        <div className="flex gap-3"><Info className="mt-0.5 shrink-0 text-indigo-600" size={20}/><div className="space-y-2 text-sm leading-6 text-slate-700">
-          <p><b>Interpretation used.</b> The notation <span className="font-mono">1/bT</span> is read as <span className="font-mono">1/(bT)</span>. The bounded component is sampled as <span className="font-mono">b ∈ (b₋,b₊)</span>, <span className="font-mono">1/(bT) &lt; a &lt; 1−b</span>, and <span className="font-mono">T ≤ s &lt; 1/(ab)</span>, where <span className="font-mono">b±=(1±√(1−4/T))/2</span>. The condition <span className="font-mono">a≤1</span> is then automatic.</p>
-          <p><b>Map.</b> θ = arccos(1/√(1+s²)), α = a√(1+s²), and n = (ab+s²ab−s)/(a²+s²a²). Each axis is independently normalized for rendering, so the display emphasizes geometry rather than absolute scale.</p>
-          <p>Open boundaries are approximated with interior sample points. Because the region becomes highly anisotropic for large T, s is sampled logarithmically.</p>
-        </div></div>
-      </CardContent></Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <ScatterPanel
+          data={source}
+          keys={["a", "b", "s"]}
+          title="Source Space"
+          color="#2563eb"
+        />
+
+        <ScatterPanel
+          data={target}
+          keys={["theta", "alpha", "n"]}
+          title="Transformed Space"
+          color="#dc2626"
+        />
+      </div>
     </div>
-  </div>
+  );
 }
