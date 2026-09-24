@@ -24,6 +24,15 @@
 
   		gtag('config', 'G-FRKJNDLL07');
 	</script>
+	<script type="text/javascript" charset="utf-8">
+  		function showHide(elementid){
+    		if (document.getElementById(elementid).style.display == 'none'){
+      			document.getElementById(elementid).style.display = '';
+    		} else {
+      			document.getElementById(elementid).style.display = 'none';
+    		}
+  		}
+	</script>
 </head>
 <div class="container".
 <body>
@@ -57,11 +66,12 @@
 		
 
 		<h2>
-		<a background-color="#505050" href="RS.pdf" target="blank"> Research Interests </a>
+		<a href="javascript:showHide('Research')"> Research Interests </a>
 		</h2>
-		<!--<p>
-		I study translation surfaces and metric graphs. I am particularly interested in how one might leverage harmonic analysis to understand geometric and dynamical properties of translation surfaces and, more generally, flat surfaces. 
-		</p>-->
+			<div id="Research" class="collapsible_content" style="display: none;">
+				<p id="collapsible">I work at the intersection of dynamics, harmonic analysis, and representation theory. I study flat structures and their moduli spaces, hyperbolic manifolds, Lie groups, and more generally metric spaces endowed with some amount of hyperbolicity. The majority of my work involves connecting harmonic analysis to <i>dynamical</i> properties of group actions on these various geometries.</p>
+				<p id="collapsible">On the one hand, I am interested in arguments that <i>quantify</i> these actions. On the other, I am interested in geometric properties that are connected to dynamical systems, such as a periodic trajectory of a flow. I especially love when these worlds collide - the interplay between these worlds is rich, the questions that emerge are deep and subtle, and the applications are broad: from Hamiltonian mechanics, to statistical mechanics, to quantum mechanics.</p>
+			</div>
 
 		<h2>
 		<a background-color="#505050" href="pub.html"> Papers and Preprints </a>
